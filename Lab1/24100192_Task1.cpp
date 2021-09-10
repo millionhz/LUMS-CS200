@@ -13,14 +13,13 @@ int main()
 
     for (int i = 1; i <= n; i++)
     {
-        cout << setfill(' ') << setw(spacing) << "";
+        cout << setfill(' ') << setw(n - i) << "";
         for (int j = 0; j < (2 * i) - 1; j++)
         {
             cout << "*";
         }
-        cout << setfill(' ') << setw(spacing) << "";
+        cout << setfill(' ') << setw(n - 1) << "";
         cout << endl;
-        spacing--;
     }
 
     return 0;
