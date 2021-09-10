@@ -24,20 +24,20 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-	/*****Do not change following code */
-	int first_day = atoi(argv[1]);
-	int leap_year = atoi(argv[2]);
-	int date = atoi(argv[3]);
-	int month = atoi(argv[4]);
-	/***********************************/
+    /*****Do not change following code */
+    int first_day = atoi(argv[1]);
+    int leap_year = atoi(argv[2]);
+    int date = atoi(argv[3]);
+    int month = atoi(argv[4]);
+    /***********************************/
 
-	/****Your code starts here***/
-	// No need to take input from the user. First four lines are for user input. So, you
-	// assume that the input values are already in the variables declared in the first four lines.
+    /****Your code starts here***/
+    // No need to take input from the user. First four lines are for user input. So, you
+    // assume that the input values are already in the variables declared in the first four lines.
 
-	/*****Your code ends here*******/
+    /*****Your code ends here*******/
 
-	/*****Do not change following code */
-	return 0;
-	/***********************************/
+    /*****Do not change following code */
+    return 0;
+    /***********************************/
 }
