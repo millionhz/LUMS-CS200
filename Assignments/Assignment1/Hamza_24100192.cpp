@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
     }
 
     int day_of_week = first_day;
-
+    int total_days_from_start = 0;
     const int TOTAL_MONTHS = 12;
     const int NUM_OF_DAYS[TOTAL_MONTHS] = {
         31,
@@ -137,21 +137,14 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    for (int m = 1; m <= month || m > TOTAL_MONTHS; m++)
+    for (int m = 1; m < month; m++)
     {
-        for (int d = 1; d <= NUM_OF_DAYS[m - 1]; d++)
-        {
-
-            // out << d << "-" << m << ": " << day_name(day_of_week) << endl;
-
-            if (m == month && d == date)
-                break;
-
-            day_of_week++;
-            if (day_of_week > 6)
-                day_of_week = 0;
-        }
+        total_days_from_start += NUM_OF_DAYS[m - 1];
+        // cout << total_days_from_start << endl;
     }
+    total_days_from_start += date;
+
+    day_of_week = ((total_days_from_start % 7) - 1) + first_day;
 
     cout << month_name(month) << " " << date << " is " << day_name(day_of_week) << endl;
 
