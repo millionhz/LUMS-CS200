@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     int day_of_week = first_day;
 
     const int TOTAL_MONTHS = 12;
-    const int x[TOTAL_MONTHS] = {
+    const int NUM_OF_DAYS[TOTAL_MONTHS] = {
         31,
         (leap_year) ? 29 : 28,
         31,
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 
     for (int m = 1; m <= month || m > TOTAL_MONTHS; m++)
     {
-        for (int d = 1; d <= x[m - 1]; d++)
+        for (int d = 1; d <= NUM_OF_DAYS[m - 1]; d++)
         {
 
             cout << d << "-" << m << ": " << day_name(day_of_week) << endl;
