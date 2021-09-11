@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     if (date < 1 || date > NUM_OF_DAYS[month - 1])
     {
         cout << "Invalid value for date: " << date << endl;
-        cout << "month must be between 1 and " << NUM_OF_DAYS[month - 1] << " (inclusive)" << endl;
+        cout << "date must be between 1 and " << NUM_OF_DAYS[month - 1] << " (inclusive) for the month of " << month_name(month) << endl;
         return -1;
     }
 
@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
         for (int d = 1; d <= NUM_OF_DAYS[m - 1]; d++)
         {
 
-            cout << d << "-" << m << ": " << day_name(day_of_week) << endl;
+            // out << d << "-" << m << ": " << day_name(day_of_week) << endl;
 
             if (m == month && d == date)
                 break;
