@@ -91,6 +91,27 @@ int main(int argc, char *argv[])
     // No need to take input from the user. First four lines are for user input. So, you
     // assume that the input values are already in the variables declared in the first four lines.
 
+    if (first_day < 0 || first_day > 6)
+    {
+        cout << "Invalid Value for first_date: " << first_day << endl;
+        cout << "first_date must be between 0 and 6 (inclusive)" << endl;
+        return -1;
+    }
+
+    if (leap_year < 0 || leap_year > 1)
+    {
+        cout << "Invalid value for lead_year: " << leap_year << endl;
+        cout << "leap_year must be either 0 or 1" << endl;
+        return -1;
+    }
+
+    if (month < 1 || month > 12)
+    {
+        cout << "Invalid value for month: " << month << endl;
+        cout << "month must be between 1 and 12 (inclusive)" << endl;
+        return -1;
+    }
+
     int day_of_week = first_day;
 
     const int TOTAL_MONTHS = 12;
@@ -108,6 +129,13 @@ int main(int argc, char *argv[])
         30,
         31,
     };
+
+    if (date < 1 || date > NUM_OF_DAYS[month - 1])
+    {
+        cout << "Invalid value for date: " << date << endl;
+        cout << "month must be between 1 and " << NUM_OF_DAYS[month - 1] << " (inclusive)" << endl;
+        return -1;
+    }
 
     for (int m = 1; m <= month || m > TOTAL_MONTHS; m++)
     {
