@@ -140,11 +140,13 @@ int main(int argc, char *argv[])
     for (int m = 1; m < month; m++)
     {
         total_days_from_start += NUM_OF_DAYS[m - 1];
-        // cout << total_days_from_start << endl;
     }
     total_days_from_start += date;
 
-    day_of_week = ((total_days_from_start % 7) - 1) + first_day;
+    //cout << total_days_from_start << endl;
+
+    // -1 because we have our first week day instance as 0 not 1 but the first instance of a calendar is 1
+    day_of_week = ((total_days_from_start + first_day - 1) % 7);
 
     cout << month_name(month) << " " << date << " is " << day_name(day_of_week) << endl;
 
