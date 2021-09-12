@@ -22,29 +22,6 @@ using namespace std;
 // with your campuse id
 // upload the file on LMS  without zipping it
 
-string day_name(const int x)
-{
-    switch (x)
-    {
-    case 0:
-        return "Sunday";
-    case 1:
-        return "Monday";
-    case 2:
-        return "Tuesday";
-    case 3:
-        return "Wednesday";
-    case 4:
-        return "Thursday";
-    case 5:
-        return "Friday";
-    case 6:
-        return "Saturday";
-    default:
-        return "ERROR";
-    }
-}
-
 string month_name(const int x)
 {
     switch (x)
@@ -115,6 +92,8 @@ int main(int argc, char *argv[])
     int day_of_week = first_day;
     int total_days_from_start = 0;
     const int TOTAL_MONTHS = 12;
+    string month_name = "";
+    string day_name = "";
     const int NUM_OF_DAYS[TOTAL_MONTHS] = {
         31,
         (leap_year) ? 29 : 28,
@@ -130,10 +109,54 @@ int main(int argc, char *argv[])
         31,
     };
 
+    // set month name
+    switch (month)
+    {
+    case 1:
+        month_name = "January";
+        break;
+    case 2:
+        month_name = "February";
+        break;
+    case 3:
+        month_name = "March";
+        break;
+    case 4:
+        month_name = "April";
+        break;
+    case 5:
+        month_name = "May";
+        break;
+    case 6:
+        month_name = "June";
+        break;
+    case 7:
+        month_name = "July";
+        break;
+    case 8:
+        month_name = "August";
+        break;
+    case 9:
+        month_name = "September";
+        break;
+    case 10:
+        month_name = "October";
+        break;
+    case 11:
+        month_name = "November";
+        break;
+    case 12:
+        month_name = "December";
+        break;
+    default:
+        month_name = "ERROR";
+    }
+
+    // should be done at the end as we need information about the months to print a valid help message
     if (date < 1 || date > NUM_OF_DAYS[month - 1])
     {
         cout << "Invalid value for date: " << date << endl;
-        cout << "date must be between 1 and " << NUM_OF_DAYS[month - 1] << " (inclusive) for the month of " << month_name(month) << endl;
+        cout << "date must be between 1 and " << NUM_OF_DAYS[month - 1] << " (inclusive) for the month of " << month_name << endl;
         return -1;
     }
 
@@ -148,7 +171,34 @@ int main(int argc, char *argv[])
     // -1 because we have our first week day instance as 0 not 1 but the first instance of a calendar is 1
     day_of_week = ((total_days_from_start + first_day - 1) % 7);
 
-    cout << month_name(month) << " " << date << " is " << day_name(day_of_week) << endl;
+    switch (day_of_week)
+    {
+    case 0:
+        day_name = "Sunday";
+        break;
+    case 1:
+        day_name = "Monday";
+        break;
+    case 2:
+        day_name = "Tuesday";
+        break;
+    case 3:
+        day_name = "Wednesday";
+        break;
+    case 4:
+        day_name = "Thursday";
+        break;
+    case 5:
+        day_name = "Friday";
+        break;
+    case 6:
+        day_name = "Saturday";
+        break;
+    default:
+        day_name = "ERROR";
+    }
+
+    cout << month_name << " " << date << " is " << day_name << endl;
 
     /*****Your code ends here*******/
 

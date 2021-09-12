@@ -1,5 +1,6 @@
 import calendar
 from subprocess import run
+from sys import exit
 
 
 def get_month(month):
@@ -53,12 +54,13 @@ def get_day(day):
 def get_output(firstday, leap, date, month):
     command = ["Hamza_24100192.exe", str(
         firstday), str(leap), str(date), str(month)]
-    output = run(command, capture_output=True)
-    output = output.stdout.decode("utf-8").split(" ")
+    output = run(command, capture_output=True).stdout.decode("utf-8")
+    output_list = output.split(" ")
     return {
-        "Month": get_month(output[0]),
-        "Date": int(output[1]),
-        "Day": get_day(output[-1][0:-2])
+        "Month": get_month(output_list[0]),
+        "Date": int(output_list[1]),
+        "Day": get_day(output_list[-1][0:-2]),
+        "stdout": output
     }
 
 
@@ -75,10 +77,12 @@ for y in range(2000, 2022):
                 output = get_output(first_day, leap, date, m)
                 # assert(m == _month == output["Month"])
                 if day != output["Day"]:
-                    print(f"Command: {first_day} {leap} {date} {m}")
+                    print("ERROR...")
+                    print(f"Args: {first_day} {leap} {date} {m}")
                     print(f"Year: {y}")
+                    print(f"stdout : {output['stdout']}")
 
-                    print("ERROR")
+                    exit()
 
     print(f"Year {y} PASSED...")
 
