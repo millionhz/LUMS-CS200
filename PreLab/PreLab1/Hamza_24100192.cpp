@@ -114,7 +114,7 @@ int IsValidDate(int date, int month, int year)
 // Return -1 incase date is invalid
 int NumOfDaysPasssed(int date, int month, int year)
 {
-    if (IsValidDate(date, month, year) == -1)
+    if (IsValidDate(date, month, year) != 1)
     {
         return -1;
     }
@@ -124,9 +124,13 @@ int NumOfDaysPasssed(int date, int month, int year)
         //Compute number of days passed since Dec 31, 1900.
         for (int y = 1901; y < year; y++)
         {
-            for (int m = 1; m <= 12; m++)
+            if (IsLeapYear(y))
             {
-                sum += NumOfDays(m, y);
+                sum += 366;
+            }
+            else
+            {
+                sum += 365;
             }
         }
 
@@ -135,6 +139,7 @@ int NumOfDaysPasssed(int date, int month, int year)
             sum += NumOfDays(m, year);
         }
         sum += date;
+
         return sum;
     }
 }
@@ -147,7 +152,9 @@ int main(int argc, char *argv[])
     cout << NumOfDaysPasssed(1, 1, 1901) << endl;
     cout << NumOfDaysPasssed(31, 1, 1901) << endl;
     cout << NumOfDaysPasssed(31, 12, 1901) << endl;
+    cout << NumOfDaysPasssed(1, 3, 1902) << endl;
     cout << NumOfDaysPasssed(31, 12, 2000) << endl;
+    cout << NumOfDaysPasssed(29, 2, 2001) << endl;
 
     // 1 1 1901. Should return 1
     // 31 1 1901. should return 31
