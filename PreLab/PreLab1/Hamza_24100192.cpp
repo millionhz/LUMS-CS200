@@ -63,8 +63,7 @@ int NumOfDays(int month, int year)
     }
     else
     {
-        const int TOTAL_MONTHS = 12;
-        const int NUM_OF_DAYS[TOTAL_MONTHS] = {
+        const int NUM_OF_DAYS[] = {
             31,
             IsLeapYear(year) ? 29 : 28,
             31,
@@ -88,7 +87,21 @@ int NumOfDays(int month, int year)
 // Return -1 in case date is not invalid.
 int IsValidDate(int date, int month, int year)
 {
-    return -1;
+    if (year <= 1900 || month < 1 || month > 12)
+    {
+        return -1;
+    }
+    else
+    {
+        if (date >= 1 && date <= NumOfDays(month, year))
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 }
 
 // Problem 4: Compute number of days passed since Dec 31, 1900.
@@ -107,7 +120,14 @@ int NumOfDaysPasssed(int date, int month, int year)
 int main(int argc, char *argv[])
 {
     int year = stoi(argv[1]);
-
     cout << IsLeapYear(year) << endl;
+
+    cout << endl;
+
+    // for (int i = 1; i <= 12; i++)
+    // {
+    //     cout << NumOfDays(i, year) << endl;
+    // }
+
     return 0;
 }
