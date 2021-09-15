@@ -26,21 +26,29 @@ int IsLeapYear(int year)
     // else if (year is not divisible by 100) then (it is a leap year)
     // else if (year is not divisible by 400) then (it is a common year)
     // else (it is a leap year)
-    if (year % 4)
+
+    if (year <= 1900)
     {
-        return 0;
-    }
-    else if (year % 100)
-    {
-        return 1;
-    }
-    else if (year % 400)
-    {
-        return 0;
+        return -1;
     }
     else
     {
-        return 1;
+        if (year % 4)
+        {
+            return 0;
+        }
+        else if (year % 100)
+        {
+            return 1;
+        }
+        else if (year % 400)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
     }
 }
 
@@ -49,7 +57,30 @@ int IsLeapYear(int year)
 // Return -1 in case of inavlid input. Year<=1900 in all cases should be considered invalid
 int NumOfDays(int month, int year)
 {
-    return -1;
+    if (year <= 1900 || month < 1 || month > 12)
+    {
+        return -1;
+    }
+    else
+    {
+        const int TOTAL_MONTHS = 12;
+        const int NUM_OF_DAYS[TOTAL_MONTHS] = {
+            31,
+            IsLeapYear(year) ? 29 : 28,
+            31,
+            30,
+            31,
+            30,
+            31,
+            31,
+            30,
+            31,
+            30,
+            31,
+        };
+
+        return NUM_OF_DAYS[month - 1];
+    }
 }
 
 // Problem 3:
