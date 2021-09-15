@@ -146,12 +146,10 @@ int NumOfDaysPasssed(int date, int month, int year)
 
 int main(int argc, char *argv[])
 {
-    int date = stoi(argv[1]);
-    int month = stoi(argv[2]);
-    int year = stoi(argv[3]);
-    //cout << IsLeapYear(year) << endl;
-
-    cout << NumOfDaysPasssed(date, month, year) << endl;
+    // int date = stoi(argv[1]);
+    // int month = stoi(argv[2]);
+    // int year = stoi(argv[3]);
+    // cout << NumOfDaysPasssed(date, month, year) << endl;
 
     // 1 1 1901. Should return 1
     // 31 1 1901. should return 31
