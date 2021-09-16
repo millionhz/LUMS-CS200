@@ -4,10 +4,15 @@ from subprocess import run
 start = datetime.datetime(1900, 12, 31)
 x = datetime.datetime(2001, 1, 1)
 
-z = x.year
+z = 0
+
+filename = "Hamza_24100192"
+
+run(f"g++ {filename}.cpp -o {filename}.exe", stdout=True)
+
 
 while x != datetime.datetime(2022, 12, 31):
-    command = f"Hamza_24100192.exe {x.day} {x.month} {x.year}"
+    command = f"{filename}.exe {x.day} {x.month} {x.year}"
     c = int(run(command, capture_output=True).stdout.decode("utf-8")[:-2])
     p = x - start
     if (c != p.days):
