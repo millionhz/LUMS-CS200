@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-// ! REMOVE THIS
+
 /*A rational number is a real number that can be represented by a fraction p / q, where p and q
 are integers. Create a structure �RationalNumber� with two member variables �p� and �q�.
 Write the following functions for manipulating the rational numbers.
@@ -107,9 +107,9 @@ RationalNumber divide(RationalNumber a, RationalNumber b)
 {
     RationalNumber result;
 
-    int temp = a.p;
-    a.p = a.q;
-    a.q = temp;
+    int temp = b.p;
+    b.p = b.q;
+    b.q = temp;
 
     // multiply function
     result.p = a.p * b.p;
@@ -146,25 +146,22 @@ int compare(RationalNumber a, RationalNumber b)
 
 int main()
 {
-    RationalNumber a = {0, 1};
-    RationalNumber b = {2, 4};
+    // RationalNumber a = {3, 19};
+    // RationalNumber b = {7, 21};
 
-    RationalNumber result;
+    // RationalNumber result;
 
-    result = add(a, b);
-    cout << result.p << " / " << result.q << endl;
+    // result = add(a, b);
+    // cout << result.p << " / " << result.q << endl;
 
-    result = subtract(a, b);
-    cout << result.p << " / " << result.q << endl;
+    // result = subtract(a, b);
+    // cout << result.p << " / " << result.q << endl;
 
-    result = multiply(a, b);
-    cout << result.p << " / " << result.q << endl;
+    // result = multiply(a, b);
+    // cout << result.p << " / " << result.q << endl;
 
-    result = divide(a, b);
-    cout << result.p << " / " << result.q << endl;
-
-    // a = {1, 3};
-    // b = {4, 12};
+    // result = divide(a, b);
+    // cout << result.p << " / " << result.q << endl;
 
     // cout << compare(a, b) << endl;
 
