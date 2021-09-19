@@ -1,1 +1,1 @@
-Get-ChildItem -Recurse -Include "*.exe" | Remove-Item -Verbose
+Get-ChildItem -Recurse -Include *.exe, *temp* | Remove-Item -Verbose
