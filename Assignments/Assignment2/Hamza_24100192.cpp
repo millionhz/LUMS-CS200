@@ -76,6 +76,7 @@ int MatrixMultiply(int matrix1[], int r1, int c1, int matrix2[], int r2, int c2,
     }
 
     return 0;
+    // https://en.wikipedia.org/wiki/Matrix_multiplication
 }
 
 // Problem 3
@@ -83,7 +84,7 @@ int MatrixMultiply(int matrix1[], int r1, int c1, int matrix2[], int r2, int c2,
 // is passed as argument to the function. If the function succeeds return 1 otherwise return -1.
 int MatrixTranspose(int matrix1[], int r1, int c1, int resultant[], int &r2, int &c2)
 {
-
+    // TODO: return -1 case
     for (int i = 0; i < r1 * c1; i++)
     {
         if (i == (r1 * c1 - 1))
@@ -99,19 +100,20 @@ int MatrixTranspose(int matrix1[], int r1, int c1, int resultant[], int &r2, int
     r2 = c1;
     c2 = r1;
     return 0;
+    // https://en.wikipedia.org/wiki/Matrix_multiplication
 }
 
-void printMatrix(int matrix[], int r, int c)
-{
-    for (int i = 0; i < r; i++)
-    {
-        for (int j = 0; j < c; j++)
-        {
-            cout << matrix[(c * i) + j] << " ";
-        }
-        cout << endl;
-    }
-}
+// void printMatrix(int matrix[], int r, int c)
+// {
+//     for (int i = 0; i < r; i++)
+//     {
+//         for (int j = 0; j < c; j++)
+//         {
+//             cout << matrix[(c * i) + j] << " ";
+//         }
+//         cout << endl;
+//     }
+// }
 
 int main(int argc, char *argv[])
 {
@@ -137,19 +139,19 @@ int main(int argc, char *argv[])
     // printMatrix(resultant, r3, c3);
     // cout << r3 << "X" << c3 << endl;
 
-    int m1[] = {5, 7, 9, 10, 2, 3};
-    int r1 = 2, c1 = 3;
-    cout << "Matrix 1:" << endl;
-    printMatrix(m1, r1, c1);
+    // int m1[] = {5, 7, 9, 10, 2, 3};
+    // int r1 = 2, c1 = 3;
+    // cout << "Matrix 1:" << endl;
+    // printMatrix(m1, r1, c1);
 
-    int resultant[r1 * c1] = {0};
-    int r3, c3;
+    // int resultant[r1 * c1] = {0};
+    // int r3, c3;
 
-    MatrixTranspose(m1, r1, c1, resultant, r3, c3);
+    // MatrixTranspose(m1, r1, c1, resultant, r3, c3);
 
-    cout << "Resultant:" << endl;
-    printMatrix(resultant, r3, c3);
-    cout << r3 << "X" << c3 << endl;
+    // cout << "Resultant:" << endl;
+    // printMatrix(resultant, r3, c3);
+    // cout << r3 << "X" << c3 << endl;
 
     return 0;
 }
