@@ -84,7 +84,11 @@ int MatrixMultiply(int matrix1[], int r1, int c1, int matrix2[], int r2, int c2,
 // is passed as argument to the function. If the function succeeds return 1 otherwise return -1.
 int MatrixTranspose(int matrix1[], int r1, int c1, int resultant[], int &r2, int &c2)
 {
-    // TODO: return -1 case
+    if (r1 < 1 || c2 < 1)
+    {
+        return -1;
+    }
+
     for (int i = 0; i < r1 * c1; i++)
     {
         if (i == (r1 * c1 - 1))
