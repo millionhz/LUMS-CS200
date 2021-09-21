@@ -76,7 +76,7 @@ int MatrixMultiply(int matrix1[], int r1, int c1, int matrix2[], int r2, int c2,
     }
 
     return 1;
-    // https://en.wikipedia.org/wiki/Matrix_multiplication
+    // https://en.wikipedia.org/wiki/Matrix_multiplication_algorithm#Iterative_algorithm
 }
 
 // Problem 3
@@ -104,7 +104,7 @@ int MatrixTranspose(int matrix1[], int r1, int c1, int resultant[], int &r2, int
     r2 = c1;
     c2 = r1;
     return 1;
-    // https://en.wikipedia.org/wiki/Matrix_multiplication
+    // https://en.wikipedia.org/wiki/In-place_matrix_transposition#Properties_of_the_permutation
 }
 
 int main(int argc, char *argv[])
