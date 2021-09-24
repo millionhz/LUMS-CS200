@@ -37,7 +37,7 @@ void MyString::_SetString(char *ptr)
 {
     length = _CalculateLength(ptr);
 
-    str = new char[length];
+    str = new char[length + 1];
 
     for (int i = 0; i < length; i++)
     {
@@ -127,6 +127,7 @@ int main()
 
     s.SetString(&t);
     cout << s.str << endl;
+    cout << s.GetLength() << endl;
 
     s.SetString(str);
 
