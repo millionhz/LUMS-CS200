@@ -12,11 +12,14 @@ public:
     ~MyString();
     int GetLength();
     void SetString(char *ptr);
+    void SetString(MyString *ptr);
     bool IsEqualTo(char *ptr);
+    bool IsEqualTo(MyString *ptr);
 
 private:
     void _SetString(char *ptr);
     int _CalculateLength(char *ptr);
+    bool _IsEqualTo(char *ptr);
 };
 
 MyString::MyString()
@@ -53,20 +56,7 @@ int MyString::_CalculateLength(char *ptr)
     return len;
 }
 
-int MyString::GetLength()
-{
-    return length;
-}
-
-void MyString::SetString(char *ptr)
-{
-    delete[] str;
-    str = NULL;
-
-    _SetString(ptr);
-}
-
-bool MyString::IsEqualTo(char *ptr)
+bool MyString::_IsEqualTo(char *ptr)
 {
     int length_ptr = _CalculateLength(ptr);
 
@@ -88,6 +78,37 @@ bool MyString::IsEqualTo(char *ptr)
     }
 }
 
+int MyString::GetLength()
+{
+    return length;
+}
+
+void MyString::SetString(char *ptr)
+{
+    delete[] str;
+    str = NULL;
+
+    _SetString(ptr);
+}
+
+void MyString::SetString(MyString *ptr)
+{
+    delete[] str;
+    str = NULL;
+
+    _SetString(ptr->str);
+}
+
+bool MyString::IsEqualTo(char *ptr)
+{
+    return _IsEqualTo(ptr);
+}
+
+bool MyString::IsEqualTo(MyString *ptr)
+{
+    return _IsEqualTo(ptr->str);
+}
+
 MyString::~MyString()
 {
     delete[] str;
@@ -101,13 +122,22 @@ int main()
     MyString s(str);
     cout << s.str << endl;
     cout << s.GetLength() << endl;
-    s.SetString((char *)"CS200 Is Kinda");
+
+    MyString t((char *)"AAAAAAAAAAAAA");
+
+    s.SetString(&t);
     cout << s.str << endl;
-    cout << s.GetLength() << endl;
+
+    s.SetString(str);
 
     cout << s.IsEqualTo(str) << endl;
-    s.SetString(str);
-    cout << s.IsEqualTo(str) << endl;
+
+    // cout << s.str << endl;
+    // cout << s.GetLength() << endl;
+
+    // cout << s.IsEqualTo(str) << endl;
+    // s.SetString(str);
+    // cout << s.IsEqualTo(str) << endl;
 
     return 0;
 }
