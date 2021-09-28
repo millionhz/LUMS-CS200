@@ -23,7 +23,7 @@ public:
 
     ~Circle()
     {
-        cout << "Circle at (" << x << "," << y << ") with radius = " << radius << " is destroyed" << endl;
+        cout << "Circle at (" << x << "," << y << ") with radius = " << radius << " has been destroyed" << endl;
     }
 
     void setCenter(double _x, double _y)
@@ -76,26 +76,5 @@ private:
 
 int main()
 {
-    Circle normal;
-
-    cout << normal.getRadius() << endl;                                        //Should give you 1 :>
-    cout << normal.getXCoordinate() << " " << normal.getYCoordinate() << endl; //Should give you 0,0
-
-    cout << normal.getArea() << endl;          //Should give you pi * 1 = 3.14
-    cout << normal.getCircumference() << endl; //Should give you pi * 2 = 6.something idk
-
-    normal.setCenter(4, 5);
-    cout << normal.getXCoordinate() << " " << normal.getYCoordinate() << endl; //Should give you 4,5
-
-    normal.setRadius(5);
-    cout << normal.getRadius() << endl; //Should give you 5
-
-    cout << normal.getArea() << endl;          //Should give you 25 * pi
-    cout << normal.getCircumference() << endl; //Should give you 10 * pi
-
-    //You can run the same cases for the following objects too, using different test cases/values, as they utilize different constructors
-
-    Circle notRound(1, 3);
-    Circle circular(1, 3, 2);
     return 0;
 }
