@@ -13,7 +13,6 @@ public:
 
     Set(int *_arr, int _len)
     {
-        // faster but needs more memory
         set = new int[_len];
         length = 0;
 
@@ -79,6 +78,7 @@ public:
                 {
                     arr[index_arr] = other_set.set[j];
                     index_arr++;
+                    break;
                 }
             }
         }
