@@ -64,6 +64,26 @@ public:
         return Set(arr, index_arr);
     }
 
+    Set Intersection(Set other_set)
+    {
+        int arr[this->length + other_set.length];
+        int index_arr = 0;
+
+        for (int i = 0; i < this->length; i++)
+        {
+            for (int j = 0; j < other_set.length; j++)
+            {
+                if (this->set[i] == other_set.set[j])
+                {
+                    arr[index_arr] = other_set.set[j];
+                    index_arr++;
+                }
+            }
+        }
+
+        return Set(arr, index_arr);
+    }
+
     void printSet()
     {
         cout << "{";
@@ -85,11 +105,14 @@ int main()
     Set s1 = Set(arr1, sizeof(arr1) / sizeof(int));
     s1.printSet();
 
-    int arr2[] = {-1, 2, 1, -3, 55, -5, 1, -1, 7, 11, 11, 14};
+    int arr2[] = {-1, 2, 1, -3, 55, 5, 1, -1, 7, 11, 11, 14};
     Set s2 = Set(arr2, sizeof(arr2) / sizeof(int));
     s2.printSet();
 
     Set resultant = s1.Union(s2);
+    resultant.printSet();
+
+    resultant = s1.Intersection(s2);
     resultant.printSet();
 
     return 0;
