@@ -168,46 +168,5 @@ private:
 
 int main()
 {
-    {
-        int arr1[] = {1, 2, 1, 3, 5, 1, -1};
-        Set s1 = Set(arr1, sizeof(arr1) / sizeof(int));
-        s1.printSet();
-
-        int arr2[] = {-1, 2, 1, -3, 55, 5, 1, -1, 7, 11, 11, 14};
-        Set s2 = Set(arr2, sizeof(arr2) / sizeof(int));
-        s2.printSet();
-
-        cout << "Union:" << endl;
-        Set resultant = s1.Union(s2);
-        resultant.printSet();
-
-        cout << "Intersection:" << endl;
-        Set resultant2 = s1.Intersection(s2);
-        resultant2.printSet();
-
-        cout << "Difference:" << endl;
-        Set resultant3 = s1.Difference(s2);
-        resultant3.printSet();
-    }
-
-    {
-        int arr1[] = {1, 2, 3, 4, 2, 42, 52};
-        int arr2[] = {1, 52, 3, 42, 4, 42, 4, 4, 4, 4, 4, 4, 2, 42, 3};
-
-        Set s2(arr2, sizeof(arr2) / sizeof(int));
-
-        cout << Set(arr1, sizeof(arr1) / sizeof(int)).Compare(s2) << endl;
-    }
-
-    {
-        int arr1[] = {1, 2, 3, 4, 2, 42, 52};
-        Set s1 = Set(arr1, sizeof(arr1) / sizeof(int));
-
-        Set s2 = Set();
-
-        Set resultant = s2.Union(s1);
-        resultant.printSet();
-    }
-
     return 0;
 }
