@@ -45,7 +45,7 @@ public:
         set = NULL;
     }
 
-    Set Union(Set other_set)
+    Set Union(Set &other_set)
     {
         int arr[this->length + other_set.length];
         int index_arr = 0;
@@ -65,7 +65,7 @@ public:
         return Set(arr, index_arr);
     }
 
-    Set Intersection(Set other_set)
+    Set Intersection(Set &other_set)
     {
         int arr[this->length + other_set.length];
         int index_arr = 0;
@@ -86,7 +86,7 @@ public:
         return Set(arr, index_arr);
     }
 
-    Set Difference(Set other_set)
+    Set Difference(Set &other_set)
     {
         int arr[this->length + other_set.length];
         int index_arr = 0;
@@ -112,7 +112,7 @@ public:
         return Set(arr, index_arr);
     }
 
-    bool Compare(Set other_set)
+    bool Compare(Set &other_set)
     {
 
         for (int i = 0; i < this->length; i++)
@@ -177,21 +177,26 @@ int main()
         Set s2 = Set(arr2, sizeof(arr2) / sizeof(int));
         s2.printSet();
 
+        cout << "Union:" << endl;
         Set resultant = s1.Union(s2);
         resultant.printSet();
 
-        resultant = s1.Intersection(s2);
-        resultant.printSet();
+        cout << "Intersection:" << endl;
+        Set resultant2 = s1.Intersection(s2);
+        resultant2.printSet();
 
-        resultant = s1.Difference(s2);
-        resultant.printSet();
+        cout << "Difference:" << endl;
+        Set resultant3 = s1.Difference(s2);
+        resultant3.printSet();
     }
 
     {
         int arr1[] = {1, 2, 3, 4, 2, 42, 52};
         int arr2[] = {1, 52, 3, 42, 4, 42, 4, 4, 4, 4, 4, 4, 2, 42, 3};
 
-        cout << Set(arr1, sizeof(arr1) / sizeof(int)).Compare(Set(arr2, sizeof(arr2) / sizeof(int))) << endl;
+        Set s2(arr2, sizeof(arr2) / sizeof(int));
+
+        cout << Set(arr1, sizeof(arr1) / sizeof(int)).Compare(s2) << endl;
     }
 
     {
@@ -203,5 +208,6 @@ int main()
         Set resultant = s2.Union(s1);
         resultant.printSet();
     }
+
     return 0;
 }
