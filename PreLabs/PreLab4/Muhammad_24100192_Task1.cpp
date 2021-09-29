@@ -36,6 +36,8 @@ public:
                 length++;
             }
         }
+
+        optimizeMemory();
     }
 
     ~Set()
@@ -148,6 +150,20 @@ public:
 private:
     int *set;
     int length;
+
+    void optimizeMemory()
+    {
+
+        int *new_set = new int[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            new_set[i] = set[i];
+        }
+
+        delete[] set;
+        set = new_set;
+    }
 };
 
 int main()
@@ -176,6 +192,16 @@ int main()
         int arr2[] = {1, 52, 3, 42, 4, 42, 4, 4, 4, 4, 4, 4, 2, 42, 3};
 
         cout << Set(arr1, sizeof(arr1) / sizeof(int)).Compare(Set(arr2, sizeof(arr2) / sizeof(int))) << endl;
+    }
+
+    {
+        int arr1[] = {1, 2, 3, 4, 2, 42, 52};
+        Set s1 = Set(arr1, sizeof(arr1) / sizeof(int));
+
+        Set s2 = Set();
+
+        Set resultant = s2.Union(s1);
+        resultant.printSet();
     }
     return 0;
 }
