@@ -84,6 +84,32 @@ public:
         return Set(arr, index_arr);
     }
 
+    Set Difference(Set other_set)
+    {
+        int arr[this->length + other_set.length];
+        int index_arr = 0;
+
+        for (int i = 0; i < this->length; i++)
+        {
+            bool element_present_in_both = false;
+            for (int j = 0; j < other_set.length; j++)
+            {
+                if (this->set[i] == other_set.set[j])
+                {
+                    element_present_in_both = true;
+                    break;
+                }
+            }
+
+            if (!element_present_in_both)
+            {
+                arr[index_arr] = this->set[i];
+                index_arr++;
+            }
+        }
+        return Set(arr, index_arr);
+    }
+
     void printSet()
     {
         cout << "{";
@@ -113,6 +139,9 @@ int main()
     resultant.printSet();
 
     resultant = s1.Intersection(s2);
+    resultant.printSet();
+
+    resultant = s1.Difference(s2);
     resultant.printSet();
 
     return 0;
