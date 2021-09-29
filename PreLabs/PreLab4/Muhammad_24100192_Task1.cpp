@@ -110,6 +110,31 @@ public:
         return Set(arr, index_arr);
     }
 
+    bool Compare(Set other_set)
+    {
+
+        for (int i = 0; i < this->length; i++)
+        {
+            bool same_element_present = false;
+
+            for (int j = 0; j < other_set.length; j++)
+            {
+                if (this->set[i] == other_set.set[j])
+                {
+                    same_element_present = true;
+                    break;
+                }
+            }
+
+            if (!same_element_present)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     void printSet()
     {
         cout << "{";
@@ -127,22 +152,30 @@ private:
 
 int main()
 {
-    int arr1[] = {1, 2, 1, 3, 5, 1, -1};
-    Set s1 = Set(arr1, sizeof(arr1) / sizeof(int));
-    s1.printSet();
+    {
+        int arr1[] = {1, 2, 1, 3, 5, 1, -1};
+        Set s1 = Set(arr1, sizeof(arr1) / sizeof(int));
+        s1.printSet();
 
-    int arr2[] = {-1, 2, 1, -3, 55, 5, 1, -1, 7, 11, 11, 14};
-    Set s2 = Set(arr2, sizeof(arr2) / sizeof(int));
-    s2.printSet();
+        int arr2[] = {-1, 2, 1, -3, 55, 5, 1, -1, 7, 11, 11, 14};
+        Set s2 = Set(arr2, sizeof(arr2) / sizeof(int));
+        s2.printSet();
 
-    Set resultant = s1.Union(s2);
-    resultant.printSet();
+        Set resultant = s1.Union(s2);
+        resultant.printSet();
 
-    resultant = s1.Intersection(s2);
-    resultant.printSet();
+        resultant = s1.Intersection(s2);
+        resultant.printSet();
 
-    resultant = s1.Difference(s2);
-    resultant.printSet();
+        resultant = s1.Difference(s2);
+        resultant.printSet();
+    }
 
+    {
+        int arr1[] = {1, 2, 3, 4, 2, 42, 52};
+        int arr2[] = {1, 52, 3, 42, 4, 42, 4, 4, 4, 4, 4, 4, 2, 42, 3};
+
+        cout << Set(arr1, sizeof(arr1) / sizeof(int)).Compare(Set(arr2, sizeof(arr2) / sizeof(int))) << endl;
+    }
     return 0;
 }
