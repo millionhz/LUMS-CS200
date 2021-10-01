@@ -8,6 +8,10 @@ using namespace std;
 class BankAccount
 {
 public:
+    BankAccount()
+    {
+    }
+
     BankAccount(string _firstname, string _lastname, bool _is_current, int _account_id, int _init_balance)
     {
         firstname = _firstname;
@@ -60,7 +64,14 @@ public:
     {
         return is_current;
     }
-
+    string getName()
+    {
+        return firstname + " " + lastname;
+    }
+    int getAccountID()
+    {
+        return account_id;
+    }
     void changeName(string _firstname, string _lastname)
     {
         firstname = _firstname;
@@ -83,19 +94,7 @@ private:
     }
 };
 
-int *initBankArray(int N)
-{
-    int *arr = new int[N];
-
-    for (int i = 0; i < N; i++)
-    {
-        arr[i] = -1;
-    }
-
-    return arr;
-}
-
-void delBank(int *arr)
+void delBank(BankAccount *arr)
 {
     delete[] arr;
 }
@@ -150,16 +149,48 @@ char mainScreen()
     }
 }
 
+void makeBankAccount(BankAccount *customers, int &current_size)
+{
+    string firstname;
+    string lastname;
+    bool is_current;
+    int account_id;
+    int init_balance;
+
+    string _s;
+    getline(cin, _s);
+    cin.clear();
+
+    cout << "Enter FirstName >> ";
+    getline(cin, firstname);
+
+    cout << "Enter LastName >> ";
+    getline(cin, lastname);
+
+    cout << "Enter AccountType (0: Basic | 1:Current) >> ";
+    cin >> is_current;
+
+    cout << "Enter AccountID >> ";
+    cin >> account_id;
+
+    cout << "Enter Initial Balance >> ";
+    cin >> init_balance;
+
+    customers[current_size] = BankAccount(firstname, lastname, is_current, account_id, init_balance);
+    current_size++;
+}
+
 int main()
 {
-    unsigned int N = 0;
+    int N = 0;
+    int current_size = 0;
     while (N <= 0)
     {
         cout << "Enter Max Number of Customers >> ";
         cin >> N;
     }
 
-    int *customers = initBankArray(N);
+    BankAccount *customers = new BankAccount[N];
 
     // CLS;
     /*******************/
@@ -169,6 +200,13 @@ int main()
 
         if (option == 'a')
         {
+            if (current_size < N)
+            {
+                makeBankAccount(customers, current_size);
+            }
+            CLS;
+            cout << "Account for " << customers[current_size - 1].getName() << " was created under ID:" << customers[current_size - 1].getAccountID() << endl
+                 << endl;
         }
         else if (option == 'b')
         {
