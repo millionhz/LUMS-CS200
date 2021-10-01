@@ -10,8 +10,7 @@ class BankAccount
 public:
     BankAccount()
     {
-        account_id = -1;
-        balance = 0;
+        setDefault();
     }
 
     BankAccount(string _firstname, string _lastname, bool _is_current, int _account_id, int _init_balance)
@@ -26,17 +25,14 @@ public:
 
     ~BankAccount()
     {
-        firstname = "";
-        lastname = "";
-        is_current = false;
-        account_id = -1;
-        balance = 0;
+        setDefault();
     }
 
     void deposit(int _amount)
     {
         balance += abs(_amount);
     }
+
     void withdraw(int _amount)
     {
         if (_amount <= balance)
@@ -67,14 +63,17 @@ public:
     {
         return is_current;
     }
+
     string getName()
     {
         return firstname + " " + lastname;
     }
+
     int getAccountID()
     {
         return account_id;
     }
+
     void changeName(string _firstname, string _lastname)
     {
         firstname = _firstname;
@@ -100,6 +99,15 @@ private:
             return true;
         }
     }
+
+    void setDefault()
+    {
+        firstname = "";
+        lastname = "";
+        is_current = false;
+        account_id = -1;
+        balance = 0;
+    }
 };
 
 void delBank(BankAccount *arr)
@@ -107,7 +115,7 @@ void delBank(BankAccount *arr)
     delete[] arr;
 }
 
-char mainScreen()
+void printMainScreen()
 {
     cout << "Enter A to create a new bank account" << endl;
     cout << "Enter B to delete an existing bank account" << endl;
@@ -119,7 +127,10 @@ char mainScreen()
     cout << "Enter H to check the total balance of the bank" << endl;
     cout << "Enter I to change name of a customer" << endl;
     cout << "Enter 0 to exit" << endl;
+}
 
+char getOption()
+{
     char input;
 
     while (1)
@@ -157,39 +168,6 @@ char mainScreen()
     }
 }
 
-bool makeBankAccount(BankAccount *customers, int &current_size)
-{
-    string firstname;
-    string lastname;
-    bool is_current;
-    int account_id;
-    int init_balance;
-
-    string _s;
-    getline(cin, _s);
-    cin.clear();
-
-    cout << "Enter FirstName >> ";
-    getline(cin, firstname);
-
-    cout << "Enter LastName >> ";
-    getline(cin, lastname);
-
-    cout << "Enter AccountType (0: Basic | 1: Current) >> ";
-    cin >> is_current;
-
-    cout << "Enter AccountID >> ";
-    cin >> account_id;
-
-    cout << "Enter Initial Balance >> ";
-    cin >> init_balance;
-
-    customers[current_size] = BankAccount(firstname, lastname, is_current, account_id, init_balance);
-    current_size++;
-
-    return true;
-}
-
 int getCustomerIndex(BankAccount *customers, int N, int account_id)
 {
     for (int i = 0; i < N; i++)
@@ -202,15 +180,133 @@ int getCustomerIndex(BankAccount *customers, int N, int account_id)
     return -1;
 }
 
-int main()
+int inputN()
 {
-    int N = 0;
-    int current_size = 0;
-    while (N <= 0)
+    int N;
+    do
     {
         cout << "Enter Max Number of Customers >> ";
         cin >> N;
+    } while (N <= 0);
+
+    return N;
+}
+
+int inputAccountID()
+{
+    int account_id;
+    do
+    {
+        cout << "Enter Account ID >> ";
+        cin >> account_id;
+    } while (account_id < 0);
+
+    return account_id;
+}
+
+int inputAmount()
+{
+    int amount;
+    do
+    {
+        cout << "Enter Amount >> ";
+        cin >> amount;
+    } while (amount < 0);
+
+    return amount;
+}
+
+string inputFirstName()
+{
+    string _s;
+    getline(cin, _s);
+    cin.clear();
+
+    string firstname;
+    cout << "Enter FirstName >> ";
+    getline(cin, firstname);
+
+    return firstname;
+}
+
+string inputLastName()
+{
+    string lastname;
+    cout << "Enter LastName >> ";
+    getline(cin, lastname);
+
+    return lastname;
+}
+
+bool inputAccountType()
+{
+    int type;
+    do
+    {
+        cout << "Enter Type To Change To (0: Basic | 1: Current) >> ";
+        cin >> type;
+    } while (type != 0 && type != 1);
+
+    return (bool)type;
+}
+
+int getEmptyIndex(BankAccount *customers, int N)
+{
+    for (int i = 0; i < N; i++)
+    {
+        if (customers[i].getAccountID() == -1)
+        {
+            return i;
+        }
     }
+
+    return -1;
+}
+
+bool makeBankAccount(BankAccount *customers, int N)
+{
+
+    int i = getEmptyIndex(customers, N);
+
+    if (i > -1)
+    {
+        string firstname = inputFirstName();
+        string lastname = inputLastName();
+        bool is_current = inputAccountType();
+        int account_id = inputAccountID();
+        int init_balance = inputAmount();
+        customers[i] = BankAccount(firstname, lastname, is_current, account_id, init_balance);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+int updateCurrentSize(BankAccount *customers, int N)
+{
+    int size = 0;
+    for (int i = 0; i < N; i++)
+    {
+        if (customers[i].getAccountID() != -1)
+        {
+            size++;
+        }
+    }
+
+    return size;
+}
+
+void accountDoesNotExist(int account_id)
+{
+    cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+}
+
+int main()
+{
+    int N = inputN();
+    int current_size = 0;
 
     BankAccount *customers = new BankAccount[N];
 
@@ -218,22 +314,23 @@ int main()
     /*******************/
     while (1)
     {
-        char option = mainScreen();
-
+        printMainScreen();
+        char option = getOption();
         if (option == 'a')
         {
-            if (current_size < N)
+            if (makeBankAccount(customers, N))
             {
-                makeBankAccount(customers, current_size);
+                current_size = updateCurrentSize(customers, N);
                 cout << "Account for " << customers[current_size - 1].getName() << " was created under ID:" << customers[current_size - 1].getAccountID() << endl;
+            }
+            else
+            {
+                cout << "Max account limit reached" << endl;
             }
         }
         else if (option == 'b')
         {
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
-
+            int account_id = inputAccountID();
             int i = getCustomerIndex(customers, N, account_id);
 
             if (i != -1)
@@ -242,6 +339,9 @@ int main()
                 {
                     customers[i].~BankAccount();
                     customers[i] = BankAccount();
+                    current_size = updateCurrentSize(customers, N);
+
+                    cout << "Account with id:" << account_id << " deleted" << endl;
                 }
                 else
                 {
@@ -250,18 +350,14 @@ int main()
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == 'c')
         {
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
+            int account_id = inputAccountID();
 
-            int amount;
-            cout << "Enter Amount >> ";
-            cin >> amount;
+            int amount = inputAmount();
 
             int i = getCustomerIndex(customers, N, account_id);
 
@@ -272,18 +368,14 @@ int main()
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == 'd')
         {
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
+            int account_id = inputAccountID();
 
-            int amount;
-            cout << "Enter Amount >> ";
-            cin >> amount;
+            int amount = inputAmount();
 
             int i = getCustomerIndex(customers, N, account_id);
 
@@ -301,19 +393,15 @@ int main()
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == 'e')
         {
 
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
+            int account_id = inputAccountID();
 
-            bool type;
-            cout << "Enter Type To Change To (0: Basic | 1: Current) >> ";
-            cin >> type;
+            bool type = inputAccountType();
 
             int i = getCustomerIndex(customers, N, account_id);
             if (i != -1)
@@ -337,31 +425,27 @@ int main()
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == 'f')
         {
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
+            int account_id = inputAccountID();
 
             int i = getCustomerIndex(customers, N, account_id);
 
             if (i != -1)
             {
-                cout << "Balance" << customers[i].getBalance() << endl;
+                cout << "Balance: " << customers[i].getBalance() << endl;
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == 'g')
         {
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
+            int account_id = inputAccountID();
 
             int i = getCustomerIndex(customers, N, account_id);
 
@@ -380,7 +464,7 @@ int main()
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == 'h')
@@ -395,21 +479,11 @@ int main()
         }
         else if (option == 'i')
         {
-            int account_id;
-            cout << "Enter Account ID >> ";
-            cin >> account_id;
+            int account_id = inputAccountID();
 
-            string _s;
-            getline(cin, _s);
-            cin.clear();
+            string firstname = inputFirstName();
 
-            string firstname;
-            cout << "Enter FirstName >> ";
-            getline(cin, firstname);
-
-            string lastname;
-            cout << "Enter LastName >> ";
-            getline(cin, lastname);
+            string lastname = inputLastName();
 
             int i = getCustomerIndex(customers, N, account_id);
 
@@ -422,7 +496,7 @@ int main()
             }
             else
             {
-                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+                accountDoesNotExist(account_id);
             }
         }
         else if (option == '0')
