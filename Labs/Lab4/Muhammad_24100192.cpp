@@ -222,7 +222,6 @@ int main()
 
         if (option == 'a')
         {
-            bool success = false;
             if (current_size < N)
             {
                 makeBankAccount(customers, current_size);
