@@ -83,6 +83,23 @@ private:
     }
 };
 
+int *initBankArray(int N)
+{
+    int *arr = new int[N];
+
+    for (int i = 0; i < N; i++)
+    {
+        arr[i] = -1;
+    }
+
+    return arr;
+}
+
+void delBank(int *arr)
+{
+    delete[] arr;
+}
+
 char mainScreen()
 {
     cout << "Enter A to create a new bank account" << endl;
@@ -121,8 +138,8 @@ char mainScreen()
             return 'h';
         else if (input == 'I' || input == 'i')
             return 'i';
-        else if (input == 0)
-            return 0;
+        else if (input == '0')
+            return '0';
         else
         {
             cout << "Invalid Input!" << endl;
@@ -136,18 +153,56 @@ char mainScreen()
 int main()
 {
     unsigned int N = 0;
-
     while (N <= 0)
     {
         cout << "Enter Max Number of Customers >> ";
         cin >> N;
     }
+
+    int *customers = initBankArray(N);
+
     // CLS;
+    /*******************/
+    while (1)
+    {
+        char option = mainScreen();
 
-    mainScreen();
-
-    //TODO: USE CLASS
-
-    // TODO: Bank assets
-    return 0;
+        if (option == 'a')
+        {
+        }
+        else if (option == 'b')
+        {
+        }
+        else if (option == 'c')
+        {
+        }
+        else if (option == 'd')
+        {
+        }
+        else if (option == 'e')
+        {
+        }
+        else if (option == 'f')
+        {
+        }
+        else if (option == 'g')
+        {
+        }
+        else if (option == 'h')
+        {
+        }
+        else if (option == 'i')
+        {
+        }
+        else if (option == '0')
+        {
+            delBank(customers);
+            return 0;
+        }
+        else
+        {
+            cout << "ELSE TRIGGERED!";
+            return 0;
+        }
+    }
 }
