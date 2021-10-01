@@ -219,8 +219,7 @@ int main()
             if (current_size < N)
             {
                 makeBankAccount(customers, current_size);
-                cout << "Account for " << customers[current_size - 1].getName() << " was created under ID:" << customers[current_size - 1].getAccountID() << endl
-                     << endl;
+                cout << "Account for " << customers[current_size - 1].getName() << " was created under ID:" << customers[current_size - 1].getAccountID() << endl;
             }
         }
         else if (option == 'b')
@@ -250,9 +249,54 @@ int main()
         }
         else if (option == 'c')
         {
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            int amount;
+            cout << "Enter Amount >> ";
+            cin >> amount;
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (i != -1)
+            {
+                customers[i].deposit(amount);
+                cout << "Transaction Successful for Account ID: " << account_id << ", Account Title: " << customers[i].getName() << ", New Balance: " << customers[i].getBalance() << endl;
+            }
+            else
+            {
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+            }
         }
         else if (option == 'd')
         {
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            int amount;
+            cout << "Enter Amount >> ";
+            cin >> amount;
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (i != -1)
+            {
+                if (customers[i].getBalance() >= amount)
+                {
+                    customers[i].withdraw(amount);
+                    cout << "Transaction Successful for Account ID: " << account_id << ", Account Title: " << customers[i].getName() << ", New Balance: " << customers[i].getBalance() << endl;
+                }
+                else
+                {
+                    cout << "Account Balance Low" << endl;
+                }
+            }
+            else
+            {
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+            }
         }
         else if (option == 'e')
         {
