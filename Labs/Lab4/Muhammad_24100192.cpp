@@ -10,6 +10,7 @@ class BankAccount
 public:
     BankAccount()
     {
+        account_id = -1;
     }
 
     BankAccount(string _firstname, string _lastname, bool _is_current, int _account_id, int _init_balance)
@@ -149,7 +150,7 @@ char mainScreen()
     }
 }
 
-void makeBankAccount(BankAccount *customers, int &current_size)
+bool makeBankAccount(BankAccount *customers, int &current_size)
 {
     string firstname;
     string lastname;
@@ -178,6 +179,20 @@ void makeBankAccount(BankAccount *customers, int &current_size)
 
     customers[current_size] = BankAccount(firstname, lastname, is_current, account_id, init_balance);
     current_size++;
+
+    return true;
+}
+
+int getCustomerIndex(BankAccount *customers, int N, int account_id)
+{
+    for (int i = 0; i < N; i++)
+    {
+        if (customers[i].getAccountID() == account_id)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 int main()
@@ -200,16 +215,38 @@ int main()
 
         if (option == 'a')
         {
+            bool success = false;
             if (current_size < N)
             {
                 makeBankAccount(customers, current_size);
+                cout << "Account for " << customers[current_size - 1].getName() << " was created under ID:" << customers[current_size - 1].getAccountID() << endl
+                     << endl;
             }
-            CLS;
-            cout << "Account for " << customers[current_size - 1].getName() << " was created under ID:" << customers[current_size - 1].getAccountID() << endl
-                 << endl;
         }
         else if (option == 'b')
         {
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (i != -1)
+            {
+                if (customers[i].getBalance() <= 0)
+                {
+                    customers[i].~BankAccount();
+                    customers[i] = BankAccount();
+                }
+                else
+                {
+                    cout << "Balance is > 0" << endl;
+                }
+            }
+            else
+            {
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+            }
         }
         else if (option == 'c')
         {
