@@ -11,6 +11,7 @@ public:
     BankAccount()
     {
         account_id = -1;
+        balance = 0;
     }
 
     BankAccount(string _firstname, string _lastname, bool _is_current, int _account_id, int _init_balance)
@@ -316,35 +317,114 @@ int main()
             cin >> type;
 
             int i = getCustomerIndex(customers, N, account_id);
-
-            if (type)
+            if (i != -1)
             {
-                if (customers[i].changeToCurrent())
+                if (type)
                 {
-                    cout << "Account type of ID: " << customers[i].getAccountID() << " under Title: " << customers[i].getName() << " changed to Current" << endl;
+                    if (customers[i].changeToCurrent())
+                    {
+                        cout << "Account type of ID: " << customers[i].getAccountID() << " under Title: " << customers[i].getName() << " changed to Current" << endl;
+                    }
+                    else
+                    {
+                        cout << "Balance < 50000" << endl;
+                    }
                 }
                 else
                 {
-                    cout << "Balance < 50000" << endl;
+                    customers[i].changeToBasic();
+                    cout << "Account type of ID: " << customers[i].getAccountID() << " under Title: " << customers[i].getName() << " changed to Basic" << endl;
                 }
             }
             else
             {
-                customers[i].changeToBasic();
-                cout << "Account type of ID: " << customers[i].getAccountID() << " under Title: " << customers[i].getName() << " changed to Basic" << endl;
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
             }
         }
         else if (option == 'f')
         {
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (i != -1)
+            {
+                cout << "Balance" << customers[i].getBalance() << endl;
+            }
+            else
+            {
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+            }
         }
         else if (option == 'g')
         {
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (i != -1)
+            {
+                bool is_current = customers[i].getIsCurrent();
+
+                if (is_current)
+                {
+                    cout << "Current" << endl;
+                }
+                else
+                {
+                    cout << "Basic" << endl;
+                }
+            }
+            else
+            {
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+            }
         }
         else if (option == 'h')
         {
+            int total = 0;
+            for (int i = 0; i < N; i++)
+            {
+                total += customers[i].getBalance();
+            }
+
+            cout << "Total Balance: " << total << endl;
         }
         else if (option == 'i')
         {
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            string _s;
+            getline(cin, _s);
+            cin.clear();
+
+            string firstname;
+            cout << "Enter FirstName >> ";
+            getline(cin, firstname);
+
+            string lastname;
+            cout << "Enter LastName >> ";
+            getline(cin, lastname);
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (i != -1)
+            {
+                string oldname = customers[i].getName();
+                customers[i].changeName(firstname, lastname);
+
+                cout << "Name for ID: " << customers[i].getAccountID() << " changed from " << oldname << " to " << customers[i].getName() << endl;
+            }
+            else
+            {
+                cout << "Bank Account with id: " << account_id << " does not exists" << endl;
+            }
         }
         else if (option == '0')
         {
