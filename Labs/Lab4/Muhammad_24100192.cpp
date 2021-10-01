@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+
+#define CLS system("CLS");
 
 using namespace std;
 
@@ -58,7 +61,7 @@ public:
         return is_current;
     }
 
-    string changeName(string _firstname, string _lastname)
+    void changeName(string _firstname, string _lastname)
     {
         firstname = _firstname;
         lastname = _lastname;
@@ -80,8 +83,69 @@ private:
     }
 };
 
+char mainScreen()
+{
+    cout << "Enter A to create a new bank account" << endl;
+    cout << "Enter B to delete an existing bank account" << endl;
+    cout << "Enter C to perform a deposit transaction" << endl;
+    cout << "Enter D to perform a withdrawal transaction" << endl;
+    cout << "Enter E to change account type of a customer" << endl;
+    cout << "Enter F to check balance of a customer" << endl;
+    cout << "Enter G to check account type of a customer" << endl;
+    cout << "Enter H to check the total balance of the bank" << endl;
+    cout << "Enter I to change name of a customer" << endl;
+    cout << "Enter 0 to exit" << endl;
+
+    char input;
+
+    while (1)
+    {
+        cout << "Option >> ";
+        cin >> input;
+
+        if (input == 'A' || input == 'a')
+            return 'a';
+        else if (input == 'B' || input == 'b')
+            return 'b';
+        else if (input == 'C' || input == 'c')
+            return 'c';
+        else if (input == 'D' || input == 'd')
+            return 'd';
+        else if (input == 'E' || input == 'e')
+            return 'e';
+        else if (input == 'F' || input == 'f')
+            return 'f';
+        else if (input == 'G' || input == 'g')
+            return 'g';
+        else if (input == 'H' || input == 'h')
+            return 'h';
+        else if (input == 'I' || input == 'i')
+            return 'i';
+        else if (input == 0)
+            return 0;
+        else
+        {
+            cout << "Invalid Input!" << endl;
+            string _s;
+            getline(cin, _s);
+            cin.clear();
+        }
+    }
+}
+
 int main()
 {
+    unsigned int N = 0;
+
+    while (N <= 0)
+    {
+        cout << "Enter Max Number of Customers >> ";
+        cin >> N;
+    }
+    // CLS;
+
+    mainScreen();
+
     //TODO: USE CLASS
 
     // TODO: Bank assets
