@@ -45,15 +45,16 @@ public:
         }
     }
 
-    void changeToCurrent()
+    bool changeToCurrent()
     {
         is_current = true;
-        ensureMinBalanceReq();
+        return ensureMinBalanceReq();
     }
 
-    void changeToBasic()
+    bool changeToBasic()
     {
         is_current = false;
+        return true;
     }
 
     int getBalance()
@@ -86,11 +87,16 @@ private:
     int account_id;
     int balance;
 
-    void ensureMinBalanceReq()
+    bool ensureMinBalanceReq()
     {
         if ((balance < 50000) && (is_current))
         {
             is_current = false;
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 };
@@ -168,7 +174,7 @@ bool makeBankAccount(BankAccount *customers, int &current_size)
     cout << "Enter LastName >> ";
     getline(cin, lastname);
 
-    cout << "Enter AccountType (0: Basic | 1:Current) >> ";
+    cout << "Enter AccountType (0: Basic | 1: Current) >> ";
     cin >> is_current;
 
     cout << "Enter AccountID >> ";
@@ -300,6 +306,33 @@ int main()
         }
         else if (option == 'e')
         {
+
+            int account_id;
+            cout << "Enter Account ID >> ";
+            cin >> account_id;
+
+            bool type;
+            cout << "Enter Type To Change To (0: Basic | 1: Current) >> ";
+            cin >> type;
+
+            int i = getCustomerIndex(customers, N, account_id);
+
+            if (type)
+            {
+                if (customers[i].changeToCurrent())
+                {
+                    cout << "Account type of ID: " << customers[i].getAccountID() << " under Title: " << customers[i].getName() << " changed to Current" << endl;
+                }
+                else
+                {
+                    cout << "Balance < 50000" << endl;
+                }
+            }
+            else
+            {
+                customers[i].changeToBasic();
+                cout << "Account type of ID: " << customers[i].getAccountID() << " under Title: " << customers[i].getName() << " changed to Basic" << endl;
+            }
         }
         else if (option == 'f')
         {
