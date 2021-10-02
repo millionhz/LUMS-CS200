@@ -6,58 +6,83 @@ using namespace std;
 class Polygon
 {
 private:
-    double **coordinates;
-    int sides;
+    double *coordinates;
+    int total_points;
 
-    double distance(double *point1, double *point2)
+    double distance(double x1, double y1, double x2, double y2)
     {
         // 0 = x
         // 1 = y
-        return sqrt(((point1[0] - point2[0]) * (point1[0] - point2[0])) + ((point1[1] - point2[1]) * (point1[1] - point2[1])));
+        return sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
+    }
+
+    double *initCoordinateArray()
+    {
+        return new double[total_points];
+    }
+    void deleteCoordinateArray()
+    {
+        delete[] coordinates;
+    }
+
+    void addPointsToCoordinateArray(double *_coordinates)
+    {
+        for (int i = 0; i < total_points; i++)
+        {
+            coordinates[i] = _coordinates[i];
+        }
+    }
+
+    void initSquare()
+    {
+        total_points = 4 * 2;
+        coordinates = initCoordinateArray();
+
+        double _coordinates[] = {0, 0, 0, 1, 1, 1, 1, 0};
+        addPointsToCoordinateArray(_coordinates);
     }
 
 public:
     Polygon()
     {
-        sides = 4;
-        coordinates = new double *[sides];
+        initSquare();
+    }
 
-        for (int i = 0; i < 4; i++)
+    Polygon(double *_coordinates, int _sides)
+    {
+        if (_sides < 2 || (_sides * 2) % 2 != 0)
         {
-            coordinates[i] = new double[2];
+            initSquare();
         }
+        else
+        {
+            total_points = _sides * 2;
+            coordinates = initCoordinateArray();
+            addPointsToCoordinateArray(_coordinates);
+        }
+    }
 
-        coordinates[0][0] = 0;
-        coordinates[0][1] = 0;
-
-        coordinates[1][0] = 0;
-        coordinates[1][1] = 1;
-
-        coordinates[2][0] = 1;
-        coordinates[2][1] = 1;
-
-        coordinates[3][0] = 1;
-        coordinates[3][1] = 0;
+    void printCoordinates()
+    {
+        for (int i = 0; i < total_points; i += 2)
+        {
+            cout << "(" << coordinates[i] << ", " << coordinates[i + 1] << ")" << endl;
+        }
     }
 
     ~Polygon()
     {
-        for (int i = 0; i < sides; i++)
-        {
-            delete[] coordinates[i];
-        }
-        delete[] coordinates;
+        deleteCoordinateArray();
     }
 
     double perimeter()
     {
-        int perimeter = 0;
-        for (int i = 0; i < sides - 1; i++)
+        double perimeter = 0;
+        for (int i = 0; i < total_points - 2; i += 2)
         {
-            perimeter += distance(coordinates[i], coordinates[i + 1]);
+            perimeter += distance(coordinates[i], coordinates[i + 1], coordinates[i + 2], coordinates[i + 3]);
         }
-        perimeter += distance(coordinates[0], coordinates[sides - 1]);
-
+        perimeter += distance(coordinates[(total_points)-2], coordinates[(total_points)-1], coordinates[0], coordinates[1]);
         return perimeter;
     }
 };
@@ -65,7 +90,11 @@ public:
 int main()
 {
     Polygon square;
-
     cout << square.perimeter() << endl;
+
+    double triangle_coordinates[] = {0, 0, 1, 0, 0, 1};
+    Polygon triangle(triangle_coordinates, 3);
+    cout << triangle.perimeter() << endl;
+
     return 0;
 }
