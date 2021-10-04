@@ -11,8 +11,6 @@ private:
 
     double distance(double x1, double y1, double x2, double y2)
     {
-        // 0 = x
-        // 1 = y
         return sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
     }
 
@@ -94,6 +92,7 @@ int main()
 
     double triangle_coordinates[] = {0, 0, 1, 0, 0, 1};
     Polygon triangle(triangle_coordinates, 3);
+    //constructor takes in coordinates and number of sides of polygon
     cout << triangle.perimeter() << endl;
 
     return 0;
