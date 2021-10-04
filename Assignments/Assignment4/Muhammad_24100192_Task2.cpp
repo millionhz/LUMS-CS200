@@ -7,6 +7,9 @@ class Polygon
 {
 private:
     double *coordinates;
+    double *x;
+    double *y;
+    int sides;
     int total_points;
 
     double distance(double x1, double y1, double x2, double y2)
@@ -16,30 +19,57 @@ private:
         return sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
     }
 
+    double *getX(double *coordinates)
+    {
+        double *x = new double[sides];
+        int index = 0;
+        for (int i = 0; i < total_points; i += 2)
+        {
+            x[index] = coordinates[i];
+            index++;
+        }
+
+        return x;
+    }
+
+    double *getY(double *coordinates)
+    {
+        double *y = new double[sides];
+        int index = 0;
+        for (int i = 1; i < total_points; i += 2)
+        {
+            y[index] = coordinates[i];
+            index++;
+        }
+
+        return y;
+    }
+
     double *initCoordinateArray()
     {
         return new double[total_points];
     }
-    void deleteCoordinateArray()
-    {
-        delete[] coordinates;
-    }
 
-    void addPointsToCoordinateArray(double *_coordinates)
+    double *addPointsToCoordinateArray(double *_coordinates)
     {
         for (int i = 0; i < total_points; i++)
         {
             coordinates[i] = _coordinates[i];
         }
+        return coordinates;
     }
 
     void initSquare()
     {
-        total_points = 4 * 2;
-        coordinates = initCoordinateArray();
+        sides = 4;
 
+        total_points = sides * 2;
+        coordinates = initCoordinateArray();
         double _coordinates[] = {0, 0, 0, 1, 1, 1, 1, 0};
-        addPointsToCoordinateArray(_coordinates);
+        coordinates = addPointsToCoordinateArray(_coordinates);
+
+        x = getX(coordinates);
+        y = getY(coordinates);
     }
 
 public:
@@ -56,9 +86,14 @@ public:
         }
         else
         {
+            sides = _sides;
+
             total_points = _sides * 2;
             coordinates = initCoordinateArray();
-            addPointsToCoordinateArray(_coordinates);
+            coordinates = addPointsToCoordinateArray(_coordinates);
+
+            x = getX(coordinates);
+            y = getY(coordinates);
         }
     }
 
@@ -72,7 +107,9 @@ public:
 
     ~Polygon()
     {
-        deleteCoordinateArray();
+        delete[] coordinates;
+        delete[] x;
+        delete[] y;
     }
 
     double perimeter()
