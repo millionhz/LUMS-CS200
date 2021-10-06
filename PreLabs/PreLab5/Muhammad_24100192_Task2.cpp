@@ -32,6 +32,26 @@ private:
         return column;
     }
 
+    void printHeaders()
+    {
+        for (int i = 0; i < num_of_columns; i++)
+        {
+            cout << left << setw(15) << headers[i];
+        }
+        cout << endl;
+    }
+
+    double average(int column_number)
+    {
+        int sum = 0;
+        for (int i = 0; i < columns_lengths[column_number]; i++)
+        {
+            sum += data[column_number][i];
+        }
+
+        return static_cast<double>(sum) / columns_lengths[column_number];
+    }
+
     void deleteData()
     {
         for (int i = 0; i < num_of_columns; i++)
@@ -112,11 +132,7 @@ public:
 
     void printTable()
     {
-        for (int i = 0; i < num_of_columns; i++)
-        {
-            cout << left << setw(15) << headers[i];
-        }
-        cout << endl;
+        printHeaders();
 
         int max_rows = columns_lengths[0];
         for (int i = 1; i < num_of_columns; i++)
@@ -154,6 +170,16 @@ public:
             cout << data[column_number][i] << endl;
         }
     }
+
+    void printColumnAverage()
+    {
+        printHeaders();
+
+        for (int i = 0; i < num_of_columns; i++)
+        {
+            cout << left << setw(15) << average(i);
+        }
+    }
 };
 
 int main()
@@ -176,6 +202,7 @@ int main()
 
     Table t(4, (int *)column_lengths, data, (char **)headers);
     t.printTable();
-    t.printColumn(1);
+    //t.printColumn(1);
+    t.printColumnAverage();
     return 0;
 }
