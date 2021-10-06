@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -61,7 +62,7 @@ public:
         {
             for (int j = 0; j < columns_lengths[i]; j++)
             {
-                data[i][j] = 0;
+                data[i][j] = _data[i][j];
             }
         }
     }
@@ -83,7 +84,33 @@ public:
     {
         for (int i = 0; i < num_of_columns; i++)
         {
-            cout << headers[i] << " ";
+            cout << left << setw(15) << headers[i];
+        }
+        cout << endl;
+
+        int max_rows = columns_lengths[0];
+        for (int i = 1; i < num_of_columns; i++)
+        {
+            if (max_rows < columns_lengths[i])
+            {
+                max_rows = columns_lengths[i];
+            }
+        }
+
+        for (int i = 0; i < max_rows; i++)
+        {
+            for (int j = 0; j < num_of_columns; j++)
+            {
+                if (i < columns_lengths[j])
+                {
+                    cout << left << setw(15) << data[j][i];
+                }
+                else
+                {
+                    cout << setw(15) << " ";
+                }
+            }
+            cout << endl;
         }
         cout << endl;
     }
@@ -93,14 +120,21 @@ int main()
 {
     const char *headers[] = {"Calculus", "C++", "LA", "Databases"};
     int column_lengths[] = {1, 3, 2, 3};
-    int data[4][4] = {
-        {50, 0, 0},
-        {100, 87, 54},
-        {10, 50, 0},
-        {54, 78, 54},
-    };
+    int **data = new int *[4];
+    for (int i = 0; i < 4; i++)
+        data[i] = new int[3];
 
-    Table t(4, (int *)column_lengths, (int **)data, (char **)headers);
+    data[0][0] = 50;
+    data[1][0] = 100;
+    data[1][1] = 87;
+    data[1][2] = 54;
+    data[2][0] = 10;
+    data[2][1] = 50;
+    data[3][0] = 54;
+    data[3][1] = 78;
+    data[3][2] = 54;
+
+    Table t(4, (int *)column_lengths, data, (char **)headers);
     t.printTable();
     return 0;
 }
