@@ -186,25 +186,62 @@ public:
 
 int main()
 {
-    const char *headers[] = {"Calculus", "C++", "LA", "Databases"};
-    int column_lengths[] = {1, 3, 2, 3};
-    int **data = new int *[4];
-    for (int i = 0; i < 4; i++)
-        data[i] = new int[3];
+    int num_of_columns = 0;
 
-    data[0][0] = 50;
-    data[1][0] = 100;
-    data[1][1] = 87;
-    data[1][2] = 54;
-    data[2][0] = 10;
-    data[2][1] = 50;
-    data[3][0] = 54;
-    data[3][1] = 78;
-    data[3][2] = 54;
+    cout << "Input Number of Columns >> ";
+    cin >> num_of_columns;
 
-    Table t(4, (int *)column_lengths, data, (char **)headers);
-    t.printTable();
-    //t.printColumn(1);
-    t.printColumnAverage();
+    int *columns_lengths = new int[num_of_columns];
+    for (int i = 0; i < num_of_columns; i++)
+    {
+        cout << "Enter Length of Column " << i + 1 << " >> ";
+        cin >> columns_lengths[i];
+    }
+
+    string *headers = new string[num_of_columns];
+    string sentinel;
+    getline(cin, sentinel);
+    for (int i = 0; i < num_of_columns; i++)
+    {
+        string s;
+        cout << "Enter Name of Column " << i + 1 << " >> ";
+        getline(cin, headers[i]);
+    }
+
+    int **data = new int *[num_of_columns];
+    for (int i = 0; i < num_of_columns; i++)
+    {
+        data[i] = new int[columns_lengths[i]];
+    }
+
+    Table my_table(num_of_columns, columns_lengths, data, (char **)headers);
+
+    my_table.printTable();
+
     return 0;
 }
+
+// int main()
+// {
+//     const char *headers[] = {"Calculus", "C++", "LA", "Databases"};
+//     int column_lengths[] = {1, 3, 2, 3};
+//     int **data = new int *[4];
+//     for (int i = 0; i < 4; i++)
+//         data[i] = new int[3];
+
+//     data[0][0] = 50;
+//     data[1][0] = 100;
+//     data[1][1] = 87;
+//     data[1][2] = 54;
+//     data[2][0] = 10;
+//     data[2][1] = 50;
+//     data[3][0] = 54;
+//     data[3][1] = 78;
+//     data[3][2] = 54;
+
+//     Table t(4, (int *)column_lengths, data, (char **)headers);
+//     t.printTable();
+//     //t.printColumn(1);
+//     t.printColumnAverage();
+//     return 0;
+// }
