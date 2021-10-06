@@ -40,6 +40,18 @@ string ConvertString(string s, char (*func)(char))
 
 int main()
 {
-    cout << ConvertString("MY NAME is HAMZA", &ConvertToLowerCase) << endl;
-    cout << ConvertString("My name is Hamza", &ConvertToUpperCase) << endl;
+    char (*functptr[])(char) = {ConvertToLowerCase, ConvertToUpperCase};
+    string s = "";
+    int option = 0;
+
+    cout << "Input string >> ";
+    getline(cin, s);
+
+    do
+    {
+        cout << "Enter option [0 - ConvertToLowerCase | 1 - ConvertToUpperCase] >> ";
+        cin >> option;
+    } while (option != 0 && option != 1);
+
+    cout << ConvertString(s, functptr[option]) << endl;
 }
