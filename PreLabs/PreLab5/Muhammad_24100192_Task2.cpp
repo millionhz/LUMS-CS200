@@ -160,7 +160,6 @@ public:
             }
             cout << endl;
         }
-        cout << endl;
     }
 
     void printColumn(int column_number)
@@ -181,6 +180,7 @@ public:
         {
             cout << left << setw(15) << average(i);
         }
+        cout << endl;
     }
 };
 
@@ -198,14 +198,21 @@ int main()
         cin >> columns_lengths[i];
     }
 
-    string *headers = new string[num_of_columns];
+    string *_headers = new string[num_of_columns];
     string sentinel;
     getline(cin, sentinel);
     for (int i = 0; i < num_of_columns; i++)
     {
         string s;
         cout << "Enter Name of Column " << i + 1 << " >> ";
-        getline(cin, headers[i]);
+        getline(cin, _headers[i]);
+    }
+
+    //converting string headers to c-string headers
+    char const **headers = new char const *[num_of_columns];
+    for (int i = 0; i < num_of_columns; i++)
+    {
+        headers[i] = _headers[i].c_str();
     }
 
     int **data = new int *[num_of_columns];
@@ -214,34 +221,31 @@ int main()
         data[i] = new int[columns_lengths[i]];
     }
 
+    for (int i = 0; i < num_of_columns; i++)
+    {
+        for (int j = 0; j < columns_lengths[i]; j++)
+        {
+            cout << "Enter Value of Row " << j + 1 << " of Column " << headers[i] << " >> ";
+            cin >> data[i][j];
+        }
+    }
+
     Table my_table(num_of_columns, columns_lengths, data, (char **)headers);
 
     my_table.printTable();
+    my_table.printColumnAverage();
+
+    while (1)
+    {
+        int column_number;
+        do
+        {
+            cout << "Enter Column Number To Print (1 : first column ...) >> ";
+            cin >> column_number;
+        } while (column_number < 1 || column_number > num_of_columns);
+
+        my_table.printColumn(column_number - 1);
+    }
 
     return 0;
 }
-
-// int main()
-// {
-//     const char *headers[] = {"Calculus", "C++", "LA", "Databases"};
-//     int column_lengths[] = {1, 3, 2, 3};
-//     int **data = new int *[4];
-//     for (int i = 0; i < 4; i++)
-//         data[i] = new int[3];
-
-//     data[0][0] = 50;
-//     data[1][0] = 100;
-//     data[1][1] = 87;
-//     data[1][2] = 54;
-//     data[2][0] = 10;
-//     data[2][1] = 50;
-//     data[3][0] = 54;
-//     data[3][1] = 78;
-//     data[3][2] = 54;
-
-//     Table t(4, (int *)column_lengths, data, (char **)headers);
-//     t.printTable();
-//     //t.printColumn(1);
-//     t.printColumnAverage();
-//     return 0;
-// }
