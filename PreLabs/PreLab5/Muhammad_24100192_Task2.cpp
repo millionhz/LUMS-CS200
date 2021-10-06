@@ -32,6 +32,35 @@ private:
         return column;
     }
 
+    void initTable(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
+    {
+        num_of_columns = _num_of_columns;
+
+        headers = new char *[num_of_columns];
+        for (int i = 0; i < num_of_columns; i++)
+        {
+            int len = getLength(_headers[i]);
+            headers[i] = new char[len + 1];
+            for (int j = 0; j < len; j++)
+            {
+                headers[i][j] = _headers[i][j];
+            }
+            headers[i][len] = '\0';
+        }
+
+        columns_lengths = new int[num_of_columns];
+        for (int i = 0; i < num_of_columns; i++)
+        {
+            columns_lengths[i] = _columns_lengths[i];
+        }
+
+        data = new int *[num_of_columns];
+        for (int i = 0; i < num_of_columns; i++)
+        {
+            data[i] = initColumn(columns_lengths[i], _data[i]);
+        }
+    }
+
     void printHeaders()
     {
         for (int i = 0; i < num_of_columns; i++)
@@ -52,22 +81,17 @@ private:
         return static_cast<double>(sum) / columns_lengths[column_number];
     }
 
-    void deleteData()
+    void deleteTable()
     {
-        for (int i = 0; i < num_of_columns; i++)
-        {
-            delete data[i];
-        }
-        delete[] data;
-    }
+        delete[] columns_lengths;
 
-    void deleteHeaders()
-    {
         for (int i = 0; i < num_of_columns; i++)
         {
-            delete headers[i];
+            delete[] headers[i];
+            delete[] data[i];
         }
         delete[] headers;
+        delete[] data;
     }
 
 public:
@@ -81,40 +105,12 @@ public:
 
     Table(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
     {
-        num_of_columns = _num_of_columns;
-
-        columns_lengths = new int[num_of_columns];
-        for (int i = 0; i < num_of_columns; i++)
-        {
-            columns_lengths[i] = _columns_lengths[i];
-        }
-
-        headers = new char *[num_of_columns];
-        for (int i = 0; i < num_of_columns; i++)
-        {
-            int len = getLength(_headers[i]);
-            headers[i] = new char[len + 1];
-            for (int j = 0; j < len; j++)
-            {
-                headers[i][j] = _headers[i][j];
-            }
-            headers[i][len] = '\0';
-        }
-
-        data = new int *[num_of_columns];
-        for (int i = 0; i < num_of_columns; i++)
-        {
-            data[i] = initColumn(columns_lengths[i], _data[i]);
-        }
+        initTable(_num_of_columns, _columns_lengths, _data, _headers);
     }
 
     ~Table()
     {
-        delete[] columns_lengths;
-
-        deleteHeaders();
-
-        deleteData();
+        deleteTable();
     }
 
     void changeColumnData(int column_number, int *arr, int new_column_length)
@@ -128,6 +124,12 @@ public:
 
         delete[] data[column_number];
         data[column_number] = initColumn(columns_lengths[column_number], arr);
+    }
+
+    void setData(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
+    {
+        deleteTable();
+        initTable(_num_of_columns, _columns_lengths, _data, _headers);
     }
 
     void printTable()
