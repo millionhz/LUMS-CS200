@@ -144,6 +144,16 @@ public:
         }
         cout << endl;
     }
+
+    void printColumn(int column_number)
+    {
+        cout << headers[column_number] << endl;
+
+        for (int i = 0; i < columns_lengths[column_number]; i++)
+        {
+            cout << data[column_number][i] << endl;
+        }
+    }
 };
 
 int main()
@@ -166,5 +176,6 @@ int main()
 
     Table t(4, (int *)column_lengths, data, (char **)headers);
     t.printTable();
+    t.printColumn(1);
     return 0;
 }
