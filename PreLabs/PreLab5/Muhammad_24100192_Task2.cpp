@@ -7,9 +7,9 @@ class Table
 {
 private:
     int num_of_columns;
-    int *columns_lengths; //An array to store lengths of each of the column
-    char **headers;       //an array of character strings
-    int **data;           //A two-dimensional integer array, which stores data for each of the columns (for simplicity, we assume the data is of type integer)
+    int *columns_lengths;
+    char const **headers;
+    int **data;
 
     int getLength(const char *s)
     {
@@ -32,20 +32,14 @@ private:
         return column;
     }
 
-    void initTable(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
+    void initTable(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
     {
         num_of_columns = _num_of_columns;
 
-        headers = new char *[num_of_columns];
+        headers = new char const *[num_of_columns];
         for (int i = 0; i < num_of_columns; i++)
         {
-            int len = getLength(_headers[i]);
-            headers[i] = new char[len + 1];
-            for (int j = 0; j < len; j++)
-            {
-                headers[i][j] = _headers[i][j];
-            }
-            headers[i][len] = '\0';
+            headers[i] = _headers[i];
         }
 
         columns_lengths = new int[num_of_columns];
@@ -105,7 +99,7 @@ public:
 
     Table(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
     {
-        initTable(_num_of_columns, _columns_lengths, _data, (char **)_headers);
+        initTable(_num_of_columns, _columns_lengths, _data, _headers);
     }
 
     ~Table()
@@ -126,7 +120,7 @@ public:
         data[column_number] = initColumn(columns_lengths[column_number], arr);
     }
 
-    void setData(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
+    void setData(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
     {
         deleteTable();
         initTable(_num_of_columns, _columns_lengths, _data, _headers);
