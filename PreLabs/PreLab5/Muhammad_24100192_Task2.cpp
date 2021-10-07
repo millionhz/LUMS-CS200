@@ -188,14 +188,20 @@ int main()
 {
     int num_of_columns = 0;
 
-    cout << "Input Number of Columns >> ";
-    cin >> num_of_columns;
+    do
+    {
+        cout << "Input Number of Columns >> ";
+        cin >> num_of_columns;
+    } while (num_of_columns < 0);
 
     int *columns_lengths = new int[num_of_columns];
     for (int i = 0; i < num_of_columns; i++)
     {
-        cout << "Enter Length of Column " << i + 1 << " >> ";
-        cin >> columns_lengths[i];
+        do
+        {
+            cout << "Enter Length of Column " << i + 1 << " >> ";
+            cin >> columns_lengths[i];
+        } while (columns_lengths[i] < 1);
     }
 
     string *_headers = new string[num_of_columns];
@@ -230,9 +236,14 @@ int main()
         }
     }
 
+    /******************/
+
     Table my_table(num_of_columns, columns_lengths, data, (char **)headers);
 
+    cout << "Table:" << endl;
     my_table.printTable();
+
+    cout << "Table Average:" << endl;
     my_table.printColumnAverage();
 
     while (1)
@@ -244,6 +255,7 @@ int main()
             cin >> column_number;
         } while (column_number < 1 || column_number > num_of_columns);
 
+        cout << "Column " << column_number << ":" << endl;
         my_table.printColumn(column_number - 1);
     }
 
