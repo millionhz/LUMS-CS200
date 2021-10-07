@@ -207,9 +207,10 @@ int main()
     char **headers = new char *[num_of_columns];
     for (int i = 0; i < num_of_columns; i++)
     {
+        cin.ignore(1000, '\n');
         headers[i] = new char[100];
-        cout << "Enter Name of Column " << i + 1 << " >> ";
-        cin >> headers[i];
+        cout << "Enter Name of Column " << i + 1 << " (Max Length: 100) >> ";
+        cin.get(headers[i], 100);
     }
 
     int **data = new int *[num_of_columns];
