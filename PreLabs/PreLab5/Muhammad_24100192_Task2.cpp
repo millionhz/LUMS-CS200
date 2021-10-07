@@ -8,7 +8,7 @@ class Table
 private:
     int num_of_columns;
     int *columns_lengths;
-    char const **headers;
+    char **headers;
     int **data;
 
     int getLength(const char *s)
@@ -32,14 +32,20 @@ private:
         return column;
     }
 
-    void initTable(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
+    void initTable(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
     {
         num_of_columns = _num_of_columns;
 
-        headers = new char const *[num_of_columns];
+        headers = new char *[num_of_columns];
         for (int i = 0; i < num_of_columns; i++)
         {
-            headers[i] = _headers[i];
+            int len = getLength(_headers[i]);
+            headers[i] = new char[len + 1];
+            for (int j = 0; j < len; j++)
+            {
+                headers[i][j] = _headers[i][j];
+            }
+            headers[i][len] = '\0';
         }
 
         columns_lengths = new int[num_of_columns];
@@ -97,7 +103,7 @@ public:
         data = nullptr;
     }
 
-    Table(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
+    Table(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
     {
         initTable(_num_of_columns, _columns_lengths, _data, _headers);
     }
@@ -120,7 +126,7 @@ public:
         data[column_number] = initColumn(columns_lengths[column_number], arr);
     }
 
-    void setData(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
+    void setData(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
     {
         deleteTable();
         initTable(_num_of_columns, _columns_lengths, _data, _headers);
@@ -198,21 +204,12 @@ int main()
         } while (columns_lengths[i] < 1);
     }
 
-    string *_headers = new string[num_of_columns];
-    string sentinel;
-    getline(cin, sentinel);
+    char **headers = new char *[num_of_columns];
     for (int i = 0; i < num_of_columns; i++)
     {
-        string s;
+        headers[i] = new char[100];
         cout << "Enter Name of Column " << i + 1 << " >> ";
-        getline(cin, _headers[i]);
-    }
-
-    //converting string headers to c-string headers
-    char const **headers = new char const *[num_of_columns];
-    for (int i = 0; i < num_of_columns; i++)
-    {
-        headers[i] = _headers[i].c_str();
+        cin >> headers[i];
     }
 
     int **data = new int *[num_of_columns];
@@ -252,6 +249,16 @@ int main()
         cout << "Column " << column_number << ":" << endl;
         my_table.printColumn(column_number - 1);
     }
+
+    delete[] columns_lengths;
+
+    for (int i = 0; i < num_of_columns; i++)
+    {
+        delete[] headers[i];
+        delete[] data[i];
+    }
+    delete[] headers;
+    delete[] data;
 
     return 0;
 }
