@@ -11,7 +11,7 @@ private:
     char **headers;
     int **data;
 
-    int getLength(const char *s)
+    int getLength(char *s)
     {
         int i = 0;
         while (s[i] != '\0')
