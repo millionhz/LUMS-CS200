@@ -11,7 +11,7 @@ private:
     char **headers;       //an array of character strings
     int **data;           //A two-dimensional integer array, which stores data for each of the columns (for simplicity, we assume the data is of type integer)
 
-    int getLength(char *s)
+    int getLength(const char *s)
     {
         int i = 0;
         while (s[i] != '\0')
@@ -103,9 +103,9 @@ public:
         data = nullptr;
     }
 
-    Table(int _num_of_columns, int *_columns_lengths, int **_data, char **_headers)
+    Table(int _num_of_columns, int *_columns_lengths, int **_data, char const **_headers)
     {
-        initTable(_num_of_columns, _columns_lengths, _data, _headers);
+        initTable(_num_of_columns, _columns_lengths, _data, (char **)_headers);
     }
 
     ~Table()
@@ -238,7 +238,7 @@ int main()
 
     /******************/
 
-    Table my_table(num_of_columns, columns_lengths, data, (char **)headers);
+    Table my_table(num_of_columns, columns_lengths, data, headers);
 
     cout << "Table:" << endl;
     my_table.printTable();
