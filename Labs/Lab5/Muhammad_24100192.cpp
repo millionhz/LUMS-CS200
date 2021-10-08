@@ -47,7 +47,6 @@ private:
     Node *head;
     int length;
 
-public:
     Node *getNode(int index) const
     {
         if (index >= length || index < 0)
@@ -61,6 +60,8 @@ public:
         }
         return ptr;
     }
+
+public:
     LinkedList()
     {
         head = NULL;
@@ -95,9 +96,51 @@ public:
         return true;
     }
 
+    bool removeAt(int index)
+    {
+        if (index < 0 || index >= length)
+        {
+            return false;
+        }
+
+        Node *node_to_delete = getNode(index);
+
+        Node *prev_node = getNode(index - 1);
+
+        if (prev_node)
+        {
+            prev_node->setNextPointer(node_to_delete->getNextPointer());
+        }
+
+        if (index == 0)
+        {
+            head = node_to_delete->getNextPointer();
+        }
+
+        delete node_to_delete;
+
+        length--;
+        return true;
+    }
+
     bool insertHead(int data)
     {
         return insertAt(data, 0);
+    }
+
+    bool insertEnd(int data)
+    {
+        return insertAt(data, length);
+    }
+
+    bool removeHead()
+    {
+        return removeAt(0);
+    }
+
+    bool removeEnd()
+    {
+        return removeAt(length - 1);
     }
 
     void displayList() const
@@ -108,6 +151,17 @@ public:
         }
         cout << "NULL" << endl;
     }
+
+    ~LinkedList()
+    {
+        Node *current_node = head;
+        while (current_node)
+        {
+            Node *temp = current_node->getNextPointer();
+            delete current_node;
+            current_node = temp;
+        }
+    }
 };
 
 int main()
@@ -117,6 +171,11 @@ int main()
     list.insertAt(231, 0);
     list.insertAt(31, 1);
     list.insertAt(313, 1);
+    list.insertEnd(0);
+
+    list.displayList();
+
+    list.removeEnd();
 
     list.displayList();
     return 0;
