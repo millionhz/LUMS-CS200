@@ -53,6 +53,7 @@ private:
         {
             return NULL;
         }
+
         Node *ptr = head;
         for (int i = 0; i < index; i++)
         {
@@ -82,6 +83,7 @@ public:
         new_node->setNextPointer(current_node);
 
         Node *prev_node = getNode(index - 1);
+
         if (prev_node)
         {
             prev_node->setNextPointer(new_node);
@@ -93,6 +95,7 @@ public:
         }
 
         length++;
+
         return true;
     }
 
@@ -105,21 +108,24 @@ public:
 
         Node *node_to_delete = getNode(index);
 
+        Node *next_node = node_to_delete->getNextPointer();
+
         Node *prev_node = getNode(index - 1);
 
         if (prev_node)
         {
-            prev_node->setNextPointer(node_to_delete->getNextPointer());
+            prev_node->setNextPointer(next_node);
         }
 
         if (index == 0)
         {
-            head = node_to_delete->getNextPointer();
+            head = next_node;
         }
 
         delete node_to_delete;
 
         length--;
+
         return true;
     }
 
@@ -176,7 +182,7 @@ int main()
     list.displayList();
 
     list.removeEnd();
-
+    list.removeHead();
     list.displayList();
     return 0;
 }
