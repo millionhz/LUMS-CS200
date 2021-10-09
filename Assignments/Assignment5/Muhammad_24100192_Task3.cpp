@@ -40,14 +40,12 @@ int main()
     char s1[str_size];
     char s2[str_size];
 
-    cout << "Enter string 1 "
-         << "(Max Size: " << str_size << ") >> ";
+    cout << "Enter string 1 (Max Size: " << str_size << ") >> ";
     cin.get(s1, str_size);
 
     cin.ignore(1000, '\n');
 
-    cout << "Enter string 2 "
-         << "(Max Size: " << str_size << ") >> ";
+    cout << "Enter string 2 (Max Size: " << str_size << ") >> ";
     cin.get(s2, str_size);
 
     if (compare(s1, s2))
