@@ -4,25 +4,20 @@ using namespace std;
 
 void sepAndPrint(char *string)
 {
-    int i = -1;
-    do
+    int i = 0;
+    while (string[i] != '\0')
     {
+        if (string[i] != ';')
+        {
+            cout << string[i];
+        }
+        else
+        {
+            cout << endl
+                 << endl;
+        }
         i++;
-        int j = i;
-        while (string[j] != ';' && string[j] != '\0')
-        {
-            j++;
-        }
-
-        for (int k = i; k < j; k++)
-        {
-            cout << string[k];
-        }
-        cout << endl
-             << endl;
-
-        i = j;
-    } while (string[i] == ';');
+    }
 }
 
 int main()
