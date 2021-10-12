@@ -11,22 +11,20 @@ private:
 
     bool operate(MyMatrix &other_matrix, int (*operation)(int, int))
     {
-        if ((num_rows == other_matrix.num_rows) && (num_cols == other_matrix.num_cols))
-        {
-            for (int r = 0; r < num_rows; r++)
-            {
-                for (int c = 0; c < num_cols; c++)
-                {
-                    matrix[r][c] = operation(matrix[r][c], other_matrix.matrix[r][c]);
-                }
-            }
-
-            return true;
-        }
-        else
+        if ((num_rows != other_matrix.num_rows) || (num_cols != other_matrix.num_cols))
         {
             return false;
         }
+
+        for (int r = 0; r < num_rows; r++)
+        {
+            for (int c = 0; c < num_cols; c++)
+            {
+                matrix[r][c] = operation(matrix[r][c], other_matrix.matrix[r][c]);
+            }
+        }
+
+        return true;
     }
 
 public:
@@ -127,12 +125,11 @@ int main()
 
     cout << endl;
 
-    int n[] = {1, 1, 1, 1};
+    int n[] = {1, 0, 0, 1};
     MyMatrix matrix2(n, 2, 2);
 
-    cout << matrix1.isEqualTo(matrix2) << endl;
+    // cout << matrix1.isEqualTo(matrix2) << endl;
 
-    return 0;
     matrix2.Add(matrix1);
     matrix2.printMatrix();
 
