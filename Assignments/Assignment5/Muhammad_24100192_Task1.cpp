@@ -9,6 +9,26 @@ private:
     int num_cols;
     int num_rows;
 
+    bool operate(MyMatrix &other_matrix, int (*operation)(int, int))
+    {
+        if ((num_rows == other_matrix.num_rows) && (num_cols == other_matrix.num_cols))
+        {
+            for (int r = 0; r < num_rows; r++)
+            {
+                for (int c = 0; c < num_cols; c++)
+                {
+                    matrix[r][c] = operation(matrix[r][c], other_matrix.matrix[r][c]);
+                }
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 public:
     MyMatrix()
     {
@@ -86,26 +106,6 @@ public:
     {
         return operate(other_matrix, [](int a, int b)
                        { return a - b; });
-    }
-
-    bool operate(MyMatrix &other_matrix, int (*operation)(int, int))
-    {
-        if ((num_rows == other_matrix.num_rows) && (num_cols == other_matrix.num_cols))
-        {
-            for (int r = 0; r < num_rows; r++)
-            {
-                for (int c = 0; c < num_cols; c++)
-                {
-                    matrix[r][c] = operation(matrix[r][c], other_matrix.matrix[r][c]);
-                }
-            }
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     void printMatrix()
