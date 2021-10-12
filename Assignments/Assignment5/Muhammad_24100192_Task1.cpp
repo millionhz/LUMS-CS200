@@ -27,6 +27,28 @@ private:
         return true;
     }
 
+    int **initMatrix(int in_num_rows, int in_num_cols)
+    {
+        int **out_matrix = new int *[in_num_rows];
+        for (int i = 0; i < in_num_rows; i++)
+        {
+            out_matrix[i] = new int[in_num_cols];
+        }
+
+        return out_matrix;
+    }
+
+    int **deleteMatrix(int **in_matrix, int in_num_rows)
+    {
+        for (int i = 0; i < in_num_rows; i++)
+        {
+            delete[] in_matrix[i];
+        }
+        delete[] in_matrix;
+
+        return nullptr;
+    }
+
 public:
     MyMatrix()
     {
@@ -40,11 +62,7 @@ public:
         num_rows = in_num_rows;
         num_cols = in_num_cols;
 
-        matrix = new int *[num_rows];
-        for (int i = 0; i < num_rows; i++)
-        {
-            matrix[i] = new int[num_cols];
-        }
+        matrix = initMatrix(num_rows, num_cols);
 
         int x = 0;
         for (int r = 0; r < num_rows; r++)
@@ -64,11 +82,7 @@ public:
 
     ~MyMatrix()
     {
-        for (int i = 0; i < num_rows; i++)
-        {
-            delete[] matrix[i];
-        }
-        delete[] matrix;
+        matrix = deleteMatrix(matrix, num_rows);
     }
 
     bool isEqualTo(MyMatrix &other_matrix)
@@ -104,6 +118,37 @@ public:
                        { return a - b; });
     }
 
+    bool Multiply(MyMatrix &other_matrix)
+    {
+        if (num_cols != other_matrix.num_rows)
+        {
+            return false;
+        }
+
+        int **resultant = initMatrix(num_rows, other_matrix.num_cols);
+
+        for (int r = 0; r < num_rows; r++)
+        {
+            for (int c = 0; c < other_matrix.num_cols; c++)
+            {
+                int sum = 0;
+
+                for (int k = 0; k < num_cols; k++)
+                {
+                    sum += matrix[r][k] * other_matrix.matrix[k][c];
+                }
+
+                resultant[r][c] = sum;
+            }
+        }
+
+        matrix = deleteMatrix(matrix, num_rows);
+        num_cols = other_matrix.num_cols;
+        matrix = resultant;
+
+        return true;
+    }
+
     void printMatrix()
     {
         for (int r = 0; r < num_rows; r++)
@@ -119,26 +164,19 @@ public:
 
 int main()
 {
-    int m[] = {1, 1, 1, 1};
+    int m[] = {1, 0, 0, 1};
     MyMatrix matrix1(m, 2, 2);
     matrix1.printMatrix();
 
     cout << endl;
 
-    int n[] = {1, 0, 0, 1};
-    MyMatrix matrix2(n, 2, 2);
-
-    // cout << matrix1.isEqualTo(matrix2) << endl;
-
-    matrix2.Add(matrix1);
+    int n[] = {3, 0, 3, 1, 2, 4};
+    MyMatrix matrix2(n, 2, 3);
     matrix2.printMatrix();
-
     cout << endl;
 
-    matrix2.Subtract(matrix1);
-    matrix2.printMatrix();
-
-    cout << endl;
+    matrix1.Multiply(matrix2);
+    matrix1.printMatrix();
 
     return 0;
 }
