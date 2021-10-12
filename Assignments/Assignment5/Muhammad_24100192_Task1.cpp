@@ -149,6 +149,31 @@ public:
         return true;
     }
 
+    void Transpose()
+    {
+        if (num_rows < 1 || num_cols < 1)
+        {
+            return;
+        }
+
+        int **resultant = initMatrix(num_cols, num_rows);
+
+        for (int r = 0; r < num_rows; r++)
+        {
+            for (int c = 0; c < num_cols; c++)
+            {
+                resultant[c][r] = matrix[r][c];
+            }
+        }
+
+        matrix = deleteMatrix(matrix, num_rows);
+        matrix = resultant;
+
+        int temp = num_cols;
+        num_cols = num_rows;
+        num_rows = temp;
+    }
+
     void printMatrix()
     {
         for (int r = 0; r < num_rows; r++)
@@ -166,17 +191,19 @@ int main()
 {
     int m[] = {1, 0, 0, 1};
     MyMatrix matrix1(m, 2, 2);
-    matrix1.printMatrix();
-
-    cout << endl;
+    //matrix1.printMatrix();
+    //cout << endl;
 
     int n[] = {3, 0, 3, 1, 2, 4};
     MyMatrix matrix2(n, 2, 3);
     matrix2.printMatrix();
     cout << endl;
 
-    matrix1.Multiply(matrix2);
-    matrix1.printMatrix();
+    matrix2.Transpose();
+    matrix2.printMatrix();
+
+    // matrix1.Multiply(matrix2);
+    // matrix1.printMatrix();
 
     return 0;
 }
