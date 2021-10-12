@@ -78,13 +78,25 @@ public:
 
     bool Add(MyMatrix &other_matrix)
     {
+        return operate(other_matrix, [](int a, int b)
+                       { return a + b; });
+    }
+
+    bool Subtract(MyMatrix &other_matrix)
+    {
+        return operate(other_matrix, [](int a, int b)
+                       { return a - b; });
+    }
+
+    bool operate(MyMatrix &other_matrix, int (*operation)(int, int))
+    {
         if ((num_rows == other_matrix.num_rows) && (num_cols == other_matrix.num_cols))
         {
             for (int r = 0; r < num_rows; r++)
             {
                 for (int c = 0; c < num_cols; c++)
                 {
-                    matrix[r][c] += other_matrix.matrix[r][c];
+                    matrix[r][c] = operation(matrix[r][c], other_matrix.matrix[r][c]);
                 }
             }
 
@@ -122,6 +134,13 @@ int main()
 
     matrix2.Add(matrix1);
     matrix2.printMatrix();
+
+    cout << endl;
+
+    matrix2.Subtract(matrix1);
+    matrix2.printMatrix();
+
+    cout << endl;
 
     return 0;
 }
