@@ -76,6 +76,26 @@ public:
         return true;
     }
 
+    bool Add(MyMatrix &other_matrix)
+    {
+        if ((num_rows == other_matrix.num_rows) && (num_cols == other_matrix.num_cols))
+        {
+            for (int r = 0; r < num_rows; r++)
+            {
+                for (int c = 0; c < num_cols; c++)
+                {
+                    matrix[r][c] += other_matrix.matrix[r][c];
+                }
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     void printMatrix()
     {
         for (int r = 0; r < num_rows; r++)
@@ -95,10 +115,13 @@ int main()
     MyMatrix matrix1(m, 2, 2);
     matrix1.printMatrix();
 
-    int n[] = {1, 1, 0, 1, 3, 1};
-    MyMatrix matrix2(n, 3, 2);
+    cout << endl;
 
-    cout << matrix2.isEqualTrue(matrix1) << endl;
+    int n[] = {1, 0, 0, 1};
+    MyMatrix matrix2(n, 2, 2);
+
+    matrix2.Add(matrix1);
+    matrix2.printMatrix();
 
     return 0;
 }
