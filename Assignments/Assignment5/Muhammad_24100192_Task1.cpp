@@ -53,6 +53,29 @@ public:
         delete[] matrix;
     }
 
+    bool isEqualTrue(MyMatrix &other_matrix)
+    {
+        if ((num_rows == other_matrix.num_rows) && (num_cols == other_matrix.num_cols))
+        {
+            for (int r = 0; r < num_rows; r++)
+            {
+                for (int c = 0; c < num_cols; c++)
+                {
+                    if (matrix[r][c] != other_matrix.matrix[r][c])
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     void printMatrix()
     {
         for (int r = 0; r < num_rows; r++)
@@ -69,11 +92,13 @@ public:
 int main()
 {
     int m[] = {1, 1, 1, 1};
-    MyMatrix matrix(m, 2, 2);
-    matrix.printMatrix();
+    MyMatrix matrix1(m, 2, 2);
+    matrix1.printMatrix();
 
-    MyMatrix m2(matrix);
-    m2.printMatrix();
+    int n[] = {1, 1, 0, 1, 3, 1};
+    MyMatrix matrix2(n, 3, 2);
+
+    cout << matrix2.isEqualTrue(matrix1) << endl;
 
     return 0;
 }
