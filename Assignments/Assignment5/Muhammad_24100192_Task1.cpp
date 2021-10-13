@@ -9,7 +9,7 @@ private:
     int num_cols;
     int num_rows;
 
-    bool operate(MyMatrix &other_matrix, int (*operation)(int, int))
+    bool operate(const MyMatrix &other_matrix, int (*operation)(int, int))
     {
         if ((num_rows != other_matrix.num_rows) || (num_cols != other_matrix.num_cols))
         {
@@ -75,9 +75,20 @@ public:
         }
     }
 
-    MyMatrix(MyMatrix &in_matrix)
+    MyMatrix(const MyMatrix &in_matrix)
     {
-        // TODO
+        num_rows = in_matrix.num_rows;
+        num_cols = in_matrix.num_cols;
+
+        matrix = initMatrix(num_rows, num_cols);
+
+        for (int r = 0; r < num_rows; r++)
+        {
+            for (int c = 0; c < num_cols; c++)
+            {
+                matrix[r][c] = in_matrix.matrix[r][c];
+            }
+        }
     }
 
     ~MyMatrix()
@@ -85,7 +96,7 @@ public:
         matrix = deleteMatrix(matrix, num_rows);
     }
 
-    bool isEqualTo(MyMatrix &other_matrix)
+    bool isEqualTo(const MyMatrix &other_matrix)
     {
         if ((num_rows != other_matrix.num_rows) || (num_cols != other_matrix.num_cols))
         {
@@ -106,19 +117,19 @@ public:
         return true;
     }
 
-    bool Add(MyMatrix &other_matrix)
+    bool Add(const MyMatrix &other_matrix)
     {
         return operate(other_matrix, [](int a, int b)
                        { return a + b; });
     }
 
-    bool Subtract(MyMatrix &other_matrix)
+    bool Subtract(const MyMatrix &other_matrix)
     {
         return operate(other_matrix, [](int a, int b)
                        { return a - b; });
     }
 
-    bool Multiply(MyMatrix &other_matrix)
+    bool Multiply(const MyMatrix &other_matrix)
     {
         if (num_cols != other_matrix.num_rows)
         {
@@ -191,8 +202,8 @@ int main()
 {
     int m[] = {1, 0, 0, 1};
     MyMatrix matrix1(m, 2, 2);
-    //matrix1.printMatrix();
-    //cout << endl;
+    matrix1.printMatrix();
+    cout << endl;
 
     int n[] = {3, 0, 3, 1, 2, 4};
     MyMatrix matrix2(n, 2, 3);
@@ -201,6 +212,11 @@ int main()
 
     matrix2.Transpose();
     matrix2.printMatrix();
+
+    MyMatrix matrix3 = matrix1;
+
+    cout << endl;
+    matrix3.printMatrix();
 
     // matrix1.Multiply(matrix2);
     // matrix1.printMatrix();
