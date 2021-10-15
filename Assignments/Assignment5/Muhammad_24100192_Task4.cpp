@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int getlength(char *string)
+int getLength(char *string)
 {
     int length = 0;
     while (string[length] != '\0')
@@ -20,7 +20,7 @@ int main()
     cout << "Enter string (Max Size: " << str_size << ") >> ";
     cin.get(string, str_size);
 
-    cout << "Size of string is " << getlength(string) << endl;
+    cout << "Size of string is " << getLength(string) << endl;
 
     return 0;
 }
