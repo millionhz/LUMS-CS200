@@ -70,11 +70,22 @@ private:
         return ptr;
     }
 
-    void connectTailToHead()
+    void connectTailAndHead()
     {
         Node *last_node = getNode(length - 1);
+        if (!last_node)
+        {
+            last_node->setNextPointer(head);
+        }
+    }
 
-        last_node->setNextPointer(head);
+    void disconnectTailAndHead()
+    {
+        Node *last_node = getNode(length - 1);
+        if (!last_node)
+        {
+            last_node->setNextPointer(NULL);
+        }
     }
 
 public:
@@ -156,7 +167,7 @@ public:
 
         if (isCircular)
         {
-            connectTailToHead();
+            connectTailAndHead();
         }
 
         return out;
@@ -168,7 +179,7 @@ public:
 
         if (isCircular)
         {
-            connectTailToHead();
+            connectTailAndHead();
         }
 
         return out;
@@ -186,6 +197,8 @@ public:
 
     void deleteInstances(int x)
     {
+        disconnectTailAndHead();
+
         for (int i = 0; i < length; i++)
         {
             if (getNode(i)->getData() == x)
@@ -225,7 +238,7 @@ public:
     {
         if (!isCircular)
         {
-            connectTailToHead();
+            connectTailAndHead();
             isCircular = true;
             return true;
         }
@@ -241,7 +254,11 @@ public:
         {
             cout << getNode(i)->getData() << "->";
         }
-        cout << getNode(0)->getData() << endl;
+
+        if (getNode(0))
+        {
+            cout << getNode(0)->getData() << endl;
+        }
     }
 
     void operator=(const LinkedList &_) = delete;
@@ -254,47 +271,118 @@ public:
             Node *temp = current_node->getNextPointer();
             delete current_node;
             current_node = temp;
+            cout << current_node << endl;
         }
     }
 };
 
 void printMenu()
 {
-    cout << "1. Sum" << endl;
-    cout << "2. Average" << endl;
-    cout << "3. InsertAtHead" << endl;
-    cout << "4. InsertAtTail" << endl;
-    cout << "5. Delete Instances" << endl;
-    cout << "6. Pop" << endl;
-    cout << "7. MakeCircular" << endl;
-    cout << "8. Print List" << endl;
+    cout << "-1. Exit" << endl;
+    cout << "0. Sum" << endl;
+    cout << "1. Average" << endl;
+    cout << "2. InsertAtHead" << endl;
+    cout << "3. InsertAtTail" << endl;
+    cout << "4. Delete Instances" << endl;
+    cout << "5. Pop" << endl;
+    cout << "6. MakeCircular" << endl;
+    cout << "7. Print List" << endl;
 }
 
 int main()
 {
-    unsigned int input = 0;
+    LinkedList my_list;
 
-    LinkedList list;
-    list.insertHead(34);
-    list.insertHead(3245);
-    list.displayList();
-    cout << "Popped data " << list.pop().getData() << endl;
+    int input = 0;
 
-    list.displayList();
-
-#if 0
     while (input != -1)
     {
         printMenu();
 
         do
         {
-        cin >> input;
-        } while (input <= 0 || input > 8);
-        
+            cout << "Enter input >> ";
+            cin >> input;
+        } while (input < -1 || input > 7);
 
-        // TODO: If else hell
+        switch (input)
+        {
+        case -1:
+        {
+            break;
+        }
+        case 0:
+        { // Sum
+            cout << "Sum of the list is " << my_list.sum() << endl;
+            break;
+        }
+
+        case 1:
+        { // Average
+            cout << "Average of the list is " << my_list.average() << endl;
+            break;
+        }
+
+        case 2:
+        { // Insert At Head
+            int data = 0;
+
+            cout << "Enter data to insert at head >> ";
+            cin >> data;
+
+            my_list.insertHead(data);
+            break;
+        }
+
+        case 3:
+        { // Insert At Tail
+            int data = 0;
+
+            cout << "Enter data to insert at tail >> ";
+            cin >> data;
+
+            my_list.insertEnd(data);
+            break;
+        }
+
+        case 4:
+        { // Delete instances
+            int data;
+
+            cout << "Enter value to remove from the list >> ";
+            cin >> data;
+
+            my_list.deleteInstances(data);
+            break;
+        }
+
+        case 5:
+        { // Pop
+            Node popped = my_list.pop();
+
+            cout << "Node with data: " << popped.getData() << " and next node pointer: " << popped.getNextPointer() << " was deleted" << endl;
+            break;
+        }
+
+        case 6:
+        { // Circular
+            bool success = my_list.makeCircular();
+
+            success ? cout << "List has been made circular" << endl : cout << "List was already circular" << endl;
+            break;
+        }
+
+        case 7:
+        { // Display
+            my_list.displayList();
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+        }
     }
-#endif
     return 0;
 }
