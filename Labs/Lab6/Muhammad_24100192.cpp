@@ -25,12 +25,6 @@ public:
         next_node = NULL;
     }
 
-    Node(int a, Node *n)
-    {
-        data = a;
-        next_node = n;
-    }
-
     Node *getNextPointer() const
     {
         return next_node;
@@ -203,7 +197,9 @@ public:
 
     Node pop()
     {
-        Node head_clone(head->getData(), head->getNextPointer());
+        Node head_clone;
+        head_clone.setData(head->getData());
+        head_clone.setNextPointer(head->getNextPointer());
 
         removeHead();
 
@@ -262,6 +258,18 @@ public:
     }
 };
 
+void printMenu()
+{
+    cout << "1. Sum" << endl;
+    cout << "2. Average" << endl;
+    cout << "3. InsertAtHead" << endl;
+    cout << "4. InsertAtTail" << endl;
+    cout << "5. Delete Instances" << endl;
+    cout << "6. Pop" << endl;
+    cout << "7. MakeCircular" << endl;
+    cout << "8. Print List" << endl;
+}
+
 int main()
 {
     unsigned int input = 0;
@@ -277,8 +285,13 @@ int main()
 #if 0
     while (input != -1)
     {
-        // TODO: Print Menu
+        printMenu();
+
+        do
+        {
         cin >> input;
+        } while (input <= 0 || input > 8);
+        
 
         // TODO: If else hell
     }
