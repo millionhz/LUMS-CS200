@@ -2,9 +2,10 @@
 
 using namespace std;
 
-#include <iostream>
-
-using namespace std;
+// NOTE:
+// insertAtHead == insertHead
+// insertAtTail == insertEnd
+// delete == deleteInstances
 
 class Node
 {
@@ -43,6 +44,8 @@ public:
     {
         return data;
     }
+
+    void operator=(const Node &_) = delete;
 };
 
 class LinkedList
@@ -50,6 +53,7 @@ class LinkedList
 private:
     Node *head;
     int length;
+    bool isCircular;
 
     Node *getNode(int index) const
     {
@@ -66,11 +70,25 @@ private:
         return ptr;
     }
 
+    void connectTailToHead()
+    {
+        Node *last_node = getNode(length - 1);
+
+        last_node->setNextPointer(head);
+    }
+
 public:
     LinkedList()
     {
         head = NULL;
         length = 0;
+        isCircular = false;
+    }
+
+    LinkedList(int data)
+    {
+        insertHead(data);
+        isCircular = false;
     }
 
     bool insertAt(int data, int index)
@@ -134,12 +152,26 @@ public:
 
     bool insertHead(int data)
     {
-        return insertAt(data, 0);
+        bool out = insertAt(data, 0);
+
+        if (isCircular)
+        {
+            connectTailToHead();
+        }
+
+        return out;
     }
 
     bool insertEnd(int data)
     {
-        return insertAt(data, length);
+        bool out = insertAt(data, length);
+
+        if (isCircular)
+        {
+            connectTailToHead();
+        }
+
+        return out;
     }
 
     bool removeHead()
@@ -152,14 +184,56 @@ public:
         return removeAt(length - 1);
     }
 
+    void deleteInstances(int x)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            if (getNode(i)->getData() == x)
+            {
+                removeAt(i);
+            }
+        }
+    }
+
+    int sum()
+    {
+        int sum = 0;
+        for (int i = 0; i < length; i++)
+        {
+            sum += getNode(i)->getData();
+        }
+        return sum;
+    }
+
+    float average()
+    {
+        return sum() / (float)length;
+    }
+
+    bool makeCircular()
+    {
+        if (!isCircular)
+        {
+            connectTailToHead();
+            isCircular = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     void displayList() const
     {
         for (int i = 0; i < length; i++)
         {
             cout << getNode(i)->getData() << "->";
         }
-        cout << "NULL" << endl;
+        cout << getNode(0)->getData() << endl;
     }
+
+    void operator=(const LinkedList &_) = delete;
 
     ~LinkedList()
     {
@@ -176,6 +250,8 @@ public:
 int main()
 {
     unsigned int input = 0;
+
+#if 0
     while (input != -1)
     {
         // TODO: Print Menu
@@ -183,6 +259,6 @@ int main()
 
         // TODO: If else hell
     }
-
+#endif
     return 0;
 }
