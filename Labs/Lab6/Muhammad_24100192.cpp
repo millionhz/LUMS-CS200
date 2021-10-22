@@ -25,6 +25,12 @@ public:
         next_node = NULL;
     }
 
+    Node(int a, Node *n)
+    {
+        data = a;
+        next_node = n;
+    }
+
     Node *getNextPointer() const
     {
         return next_node;
@@ -195,6 +201,15 @@ public:
         }
     }
 
+    Node pop()
+    {
+        Node head_clone(head->getData(), head->getNextPointer());
+
+        removeHead();
+
+        return head_clone;
+    }
+
     int sum()
     {
         int sum = 0;
@@ -250,6 +265,14 @@ public:
 int main()
 {
     unsigned int input = 0;
+
+    LinkedList list;
+    list.insertHead(34);
+    list.insertHead(3245);
+    list.displayList();
+    cout << "Popped data " << list.pop().getData() << endl;
+
+    list.displayList();
 
 #if 0
     while (input != -1)
