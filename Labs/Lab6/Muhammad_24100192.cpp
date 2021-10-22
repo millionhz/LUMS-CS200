@@ -73,7 +73,7 @@ private:
     void connectTailAndHead()
     {
         Node *last_node = getNode(length - 1);
-        if (!last_node)
+        if (last_node)
         {
             last_node->setNextPointer(head);
         }
@@ -82,7 +82,7 @@ private:
     void disconnectTailAndHead()
     {
         Node *last_node = getNode(length - 1);
-        if (!last_node)
+        if (last_node)
         {
             last_node->setNextPointer(NULL);
         }
@@ -197,8 +197,6 @@ public:
 
     void deleteInstances(int x)
     {
-        disconnectTailAndHead();
-
         for (int i = 0; i < length; i++)
         {
             if (getNode(i)->getData() == x)
@@ -265,13 +263,14 @@ public:
 
     ~LinkedList()
     {
+        disconnectTailAndHead();
+
         Node *current_node = head;
         while (current_node)
         {
             Node *temp = current_node->getNextPointer();
             delete current_node;
             current_node = temp;
-            cout << current_node << endl;
         }
     }
 };
