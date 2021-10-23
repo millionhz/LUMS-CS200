@@ -55,6 +55,12 @@ private:
     int length;
     bool isCircular;
 
+    // the head and tail will get disconnected everytime an insertion happens at the end or the
+    // start of the linked list. To prevent this:
+    // 1. if statements can be used in the insertAt and removeAt functions
+    // 2. if statemntent can be used in the getNode function in such a way that it supports index
+    // which are length and length -1
+
     Node *getNode(int index) const
     {
         if (index >= length || index < 0)
@@ -129,6 +135,11 @@ public:
 
         length++;
 
+        if ((index == length - 1 || index == 0) & isCircular)
+        {
+            connectTailAndHead();
+        }
+
         return true;
     }
 
@@ -158,31 +169,22 @@ public:
 
         length--;
 
+        if ((index == length - 2 || index == 0) & isCircular)
+        {
+            connectTailAndHead();
+        }
+
         return true;
     }
 
     bool insertHead(int data)
     {
-        bool out = insertAt(data, 0);
-
-        if (isCircular)
-        {
-            connectTailAndHead();
-        }
-
-        return out;
+        return insertAt(data, 0);
     }
 
     bool insertEnd(int data)
     {
-        bool out = insertAt(data, length);
-
-        if (isCircular)
-        {
-            connectTailAndHead();
-        }
-
-        return out;
+        return insertAt(data, length);
     }
 
     bool removeHead()
@@ -197,11 +199,17 @@ public:
 
     void deleteInstances(int x)
     {
-        for (int i = 0; i < length; i++)
+        // length changes as we remove, so its better to not use a for loop
+        int i = 0;
+        while (i < length)
         {
             if (getNode(i)->getData() == x)
             {
                 removeAt(i);
+            }
+            else
+            {
+                i++;
             }
         }
     }
