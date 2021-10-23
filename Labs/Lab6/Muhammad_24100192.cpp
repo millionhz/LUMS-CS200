@@ -385,3 +385,5 @@ int main()
     }
     return 0;
 }
+
+//Also Check: https://github.com/millionhz/LUMS-CS200/blob/main/Labs/Lab5/ForLoopReduced_LinkedList.cpp
