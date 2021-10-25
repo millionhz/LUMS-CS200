@@ -169,7 +169,7 @@ public:
 
         length--;
 
-        if ((index == length - 2 || index == 0) & isCircular)
+        if ((index == length || index == 0) & isCircular)
         {
             connectTailAndHead();
         }
