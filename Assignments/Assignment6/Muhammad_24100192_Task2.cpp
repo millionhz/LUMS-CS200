@@ -12,10 +12,10 @@ private:
 
     void setValues(int hour, int minute, int second, bool is_pm)
     {
-        this->hour = hour;
-        this->minute = minute;
-        this->second = second;
-        this->is_pm = is_pm;
+        setHour(hour);
+        setMinute(minute);
+        setSecond(second);
+        setIsPm(is_pm);
     }
 
 public:
@@ -37,6 +37,67 @@ public:
     void operator=(const MyTime &time)
     {
         setValues(time.hour, time.minute, time.second, time.is_pm);
+    }
+
+    int getHour()
+    {
+        return hour;
+    }
+
+    int getMinute()
+    {
+        return minute;
+    }
+
+    int getSecond()
+    {
+        return second;
+    }
+
+    bool getIsPm()
+    {
+        return is_pm;
+    }
+
+    void setHour(int hour)
+    {
+        if (hour >= 0 && hour <= 12)
+        {
+            this->hour = hour;
+        }
+        else
+        {
+            this->hour = 0;
+        }
+    }
+
+    void setMinute(int minute)
+    {
+        if (minute >= 0 && minute <= 59)
+        {
+            this->minute = minute;
+        }
+        else
+        {
+            this->minute = 0;
+        }
+    }
+
+    void setSecond(int second)
+    {
+        if (second >= 0 && second <= 59)
+        {
+            this->second = second;
+        }
+        else
+        {
+            this->second = 0;
+        }
+    }
+
+    void setIsPm(bool is_pm)
+    {
+        this->is_pm = is_pm;
     }
 
     friend ostream &operator<<(ostream &, const MyTime &);
