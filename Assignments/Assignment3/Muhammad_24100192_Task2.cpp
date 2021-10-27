@@ -3,6 +3,9 @@
 
 using namespace std;
 
+// better getter setter implementaiton at:
+// https://github.com/millionhz/LUMS-CS200/blob/main/Assignments/Assignment6/Muhammad_24100192_Task2.cpp
+
 class Circle
 {
 public:
