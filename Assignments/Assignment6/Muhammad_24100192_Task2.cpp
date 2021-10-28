@@ -21,7 +21,7 @@ private:
 public:
     MyTime()
     {
-        setValues(0, 0, 0, 0);
+        setValues(12, 0, 0, 0);
     }
 
     MyTime(int hour, int minute, int second, bool is_pm)
@@ -61,13 +61,13 @@ public:
 
     void setHour(int hour)
     {
-        if (hour >= 0 && hour <= 12)
+        if (hour >= 1 && hour <= 12)
         {
             this->hour = hour;
         }
         else
         {
-            this->hour = 0;
+            this->hour = 12;
         }
     }
 
@@ -120,7 +120,7 @@ istream &operator>>(istream &is, MyTime &time)
     {
         cout << "Enter hours >> ";
         is >> time.hour;
-    } while (time.hour < 0 || time.hour > 12);
+    } while (time.hour < 1 || time.hour > 12);
 
     do
     {

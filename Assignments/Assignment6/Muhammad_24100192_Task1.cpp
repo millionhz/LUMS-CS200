@@ -37,7 +37,7 @@ istream &operator>>(istream &is, MyTime &time)
     {
         cout << "Enter hours >> ";
         is >> time.hour;
-    } while (time.hour < 0 || time.hour > 12);
+    } while (time.hour < 1 || time.hour > 12);
 
     do
     {
