@@ -108,9 +108,11 @@ public:
 
     void operator=(const MyMatrix &in_matrix)
     {
-        matrix = deleteMatrix(matrix, num_rows);
-
-        copyMatrix(in_matrix);
+        if (this != &in_matrix)
+        {
+            matrix = deleteMatrix(matrix, num_rows);
+            copyMatrix(in_matrix);
+        }
     }
 
     bool operator==(const MyMatrix &other_matrix)
@@ -151,8 +153,11 @@ int main()
     matrix3.printMatrix();
     cout << endl;
 
-    matrix3 = matrix2;
+    matrix3 = matrix3;
     matrix3.printMatrix();
+    cout << endl;
+
+    cout << (matrix3 == matrix1) << endl;
 
     return 0;
 }
