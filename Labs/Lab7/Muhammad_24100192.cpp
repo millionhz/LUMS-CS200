@@ -52,6 +52,22 @@ private:
         return true;
     }
 
+    void copyMatrix(const MyMatrix &in_matrix)
+    {
+        num_rows = in_matrix.num_rows;
+        num_cols = in_matrix.num_cols;
+
+        matrix = initMatrix(num_rows, num_cols);
+
+        for (int r = 0; r < num_rows; r++)
+        {
+            for (int c = 0; c < num_cols; c++)
+            {
+                matrix[r][c] = in_matrix.matrix[r][c];
+            }
+        }
+    }
+
 public:
     MyMatrix()
     {
@@ -79,18 +95,7 @@ public:
     }
     MyMatrix(const MyMatrix &in_matrix)
     {
-        num_rows = in_matrix.num_rows;
-        num_cols = in_matrix.num_cols;
-
-        matrix = initMatrix(num_rows, num_cols);
-
-        for (int r = 0; r < num_rows; r++)
-        {
-            for (int c = 0; c < num_cols; c++)
-            {
-                matrix[r][c] = in_matrix.matrix[r][c];
-            }
-        }
+        copyMatrix(in_matrix);
     }
 
     ~MyMatrix()
@@ -105,18 +110,7 @@ public:
     {
         matrix = deleteMatrix(matrix, num_rows);
 
-        num_rows = in_matrix.num_rows;
-        num_cols = in_matrix.num_cols;
-
-        matrix = initMatrix(num_rows, num_cols);
-
-        for (int r = 0; r < num_rows; r++)
-        {
-            for (int c = 0; c < num_cols; c++)
-            {
-                matrix[r][c] = in_matrix.matrix[r][c];
-            }
-        }
+        copyMatrix(in_matrix);
     }
 
     bool operator==(const MyMatrix &other_matrix)
@@ -151,7 +145,7 @@ int main()
 
     cout << (matrix1 == matrix2) << endl;
 
-    MyMatrix matrix3 = matrix1;
+    MyMatrix matrix3(matrix1);
 
     cout << endl;
     matrix3.printMatrix();
