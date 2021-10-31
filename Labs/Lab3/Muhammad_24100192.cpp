@@ -20,6 +20,7 @@ private:
     void _setValues(int _date, int _month, int _year, int _hour, int _minute, int _second);
     int _numOfDays(int month, int year);
     int _isLeapYear(int year);
+    void _addSecondsLimit_86400(int seconds_to_add);
 };
 
 void TimeStamp::_setValues(int _date, int _month, int _year, int _hour, int _minute, int _second)
@@ -102,10 +103,12 @@ TimeStamp::TimeStamp(int _date, int _month, int _year, int _hour, int _minute, i
     }
 }
 
-void TimeStamp::AddSeconds(int left_to_add)
+void TimeStamp::_addSecondsLimit_86400(int left_to_add)
 {
+    // 86400 = 60*60*24 (number of seconds in a day)
+
     int *elements[] = {&second, &minute, &hour, &date, &month};
-    const int vals[] = {60, 60, 24, _numOfDays(month, year) + 1, 13};
+    int vals[] = {60, 60, 24, _numOfDays(month, year) + 1, 13};
 
     const int SIZE = 5;
 
@@ -120,21 +123,39 @@ void TimeStamp::AddSeconds(int left_to_add)
         {
             (*elements[i])++;
         }
+
+        // updating state of numOfDays (in a month)
+        vals[3] = _numOfDays(month, year) + 1;
     }
     year += left_to_add;
 }
 
+void TimeStamp::AddSeconds(int seconds_to_add)
+{
+    // function works for smaller chunks, so i am adding iteratively
+
+    int thresh = 60 * 60 * 24;
+    while (seconds_to_add)
+    {
+        if (seconds_to_add <= thresh)
+        {
+            _addSecondsLimit_86400(seconds_to_add);
+            return;
+        }
+        else
+        {
+            _addSecondsLimit_86400(thresh);
+            seconds_to_add -= thresh;
+        }
+    }
+    return;
+}
+
 int main()
 {
-    //TimeStamp myTime;
-    TimeStamp myTime(31, 12, 2000, 23, 59, 59);
-    myTime.AddSeconds(3);
+    TimeStamp myTime(31, 12, 2000, 0, 0, 0);
+    myTime.AddSeconds(60 * 60 * 24 * 2);
     cout << myTime.second << "-" << myTime.minute << "-" << myTime.hour << "-" << myTime.date << "-" << myTime.month << "-" << myTime.year << endl;
 
-    // while (1)
-    // {
-    //     myTime.AddSeconds(86400);
-    //     cout << myTime.second << "-" << myTime.minute << "-" << myTime.hour << "-" << myTime.date << "-" << myTime.month << "-" << myTime.year << endl;
-    // }
     return 0;
 }
