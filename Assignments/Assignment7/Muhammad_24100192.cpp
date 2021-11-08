@@ -2,10 +2,6 @@
 
 using namespace std;
 
-#include <iostream>
-
-using namespace std;
-
 class MyMatrix
 {
 private:
@@ -243,9 +239,9 @@ ostream &operator<<(ostream &os, const MyMatrix &matrix)
     {
         for (int c = 0; c < matrix.num_cols; c++)
         {
-            cout << matrix.matrix[r][c] << " ";
+            os << matrix.matrix[r][c] << " ";
         }
-        cout << endl;
+        os << endl;
     }
     return os;
 }
