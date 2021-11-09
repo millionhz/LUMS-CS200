@@ -138,22 +138,6 @@ private:
         num_rows = temp;
     }
 
-    static MyMatrix operateAndReturnMatrix(const MyMatrix &m1, const MyMatrix &m2, bool (MyMatrix::*func)(const MyMatrix &))
-    {
-        MyMatrix resultant = m1;
-
-        bool success = (resultant.*func)(m2);
-
-        if (success)
-        {
-            return resultant;
-        }
-        else
-        {
-            return MyMatrix();
-        }
-    }
-
     void copyMatrix(const MyMatrix &in_matrix)
     {
         num_rows = in_matrix.num_rows;
@@ -248,12 +232,34 @@ ostream &operator<<(ostream &os, const MyMatrix &matrix)
 
 MyMatrix operator+(const MyMatrix &m1, const MyMatrix &m2)
 {
-    return MyMatrix::operateAndReturnMatrix(m1, m2, MyMatrix::Add);
+    MyMatrix resultant = m1;
+
+    bool success = resultant.Add(m2);
+
+    if (success)
+    {
+        return resultant;
+    }
+    else
+    {
+        return MyMatrix();
+    }
 }
 
 MyMatrix operator-(const MyMatrix &m1, const MyMatrix &m2)
 {
-    return MyMatrix::operateAndReturnMatrix(m1, m2, MyMatrix::Subtract);
+    MyMatrix resultant = m1;
+
+    bool success = resultant.Subtract(m2);
+
+    if (success)
+    {
+        return resultant;
+    }
+    else
+    {
+        return MyMatrix();
+    }
 }
 
 MyMatrix operator-(const MyMatrix &m1)
@@ -267,7 +273,18 @@ MyMatrix operator-(const MyMatrix &m1)
 
 MyMatrix operator*(const MyMatrix &m1, const MyMatrix &m2)
 {
-    return MyMatrix::operateAndReturnMatrix(m1, m2, MyMatrix::Multiply);
+    MyMatrix resultant = m1;
+
+    bool success = resultant.Multiply(m2);
+
+    if (success)
+    {
+        return resultant;
+    }
+    else
+    {
+        return MyMatrix();
+    }
 }
 
 int main()
