@@ -69,6 +69,7 @@ Node *makeTree(int *arr, int size, int head_node_data)
 {
     Node *head = new Node;
     head->data = head_node_data;
+    head->parent = nullptr;
 
     for (int i = 0; i < size; i++)
     {
@@ -80,10 +81,10 @@ Node *makeTree(int *arr, int size, int head_node_data)
 
 int main()
 {
-    int arr[] = {6, 12, 17, 21, 25, 37, 30, 43, 75, 62, 56, 69, 88, 81, 94, 85};
+    int arr[] = {25, 12, 37, 6, 17, 30, 43, 21, 75, 62, 88, 56, 69, 81, 94, 85};
     Node *root = makeTree(arr, sizeof(arr) / sizeof(int), 50);
 
-    int val_to_search[] = {0, 6, 12, 17, 21, 25, 37, 30, 43, 75, 62, 56, 69, 88, 81, 94, 85, 100};
+    int val_to_search[] = {50, 0, 6, 12, 17, 21, 25, 37, 30, 43, 75, 62, 56, 69, 88, 81, 94, 85, 100};
     int size = sizeof(val_to_search) / sizeof(int);
     for (int i = 0; i < size; i++)
     {
@@ -91,7 +92,7 @@ int main()
 
         if (result)
         {
-            cout << result->data << " at Node " << result << endl;
+            cout << result->data << " at Node " << result << " with Parent " << result->parent << endl;
         }
         else
         {
