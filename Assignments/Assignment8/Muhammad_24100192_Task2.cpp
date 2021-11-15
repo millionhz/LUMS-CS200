@@ -114,14 +114,16 @@ private:
 
     double getArea()
     {
-        int base_height = arr[0] - arr[2]; //x1 - x2
-        return 0.5 * base_height * base_height;
+        // Shoelace Formula
+        return 0.5 * abs(arr[0] * (arr[3] - arr[5]) + arr[2] * (arr[5] - arr[1]) + arr[4] * (arr[1] - arr[3]));
     }
 
     double getPerimeter()
     {
-        int base_height = arr[0] - arr[2]; //x1 - x2
-        return 2 * abs(base_height) + sqrt(((arr[4] - arr[2]) * (arr[4] - arr[2])) + ((arr[5] - arr[3]) * (arr[5] - arr[3])));
+        int l1 = sqrt(((arr[2] - arr[0]) * (arr[2] - arr[0])) + ((arr[3] - arr[1]) * (arr[3] - arr[1])));
+        int l2 = sqrt(((arr[4] - arr[2]) * (arr[4] - arr[2])) + ((arr[5] - arr[3]) * (arr[5] - arr[3])));
+        int l3 = sqrt(((arr[0] - arr[4]) * (arr[0] - arr[4])) + ((arr[1] - arr[5]) * (arr[1] - arr[5])));
+        return l1 + l2 + l3;
     }
 
 protected:
@@ -175,7 +177,7 @@ int main()
         }
         else
         {
-            myShapes[i] = new RightAngledTriangle(0, 0, 4, 4, 0, 8);
+            myShapes[i] = new RightAngledTriangle(2, 4, 3, -6, 7, 8);
         }
     }
 
