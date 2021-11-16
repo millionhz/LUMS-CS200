@@ -13,7 +13,10 @@ public:
     virtual void area() = 0;
     virtual void perimeter() = 0;
 
-    virtual ~Shape() {}
+    virtual ~Shape()
+    {
+        cout << "Base Desctructor Called" << endl;
+    }
 };
 
 class Circle : public Shape
@@ -55,6 +58,7 @@ public:
 
     ~Circle()
     {
+        cout << "Child Desctructor Called" << endl;
         delete arr;
         arr = nullptr;
     }
@@ -102,6 +106,7 @@ public:
 
     ~Square()
     {
+        cout << "Child Desctructor Called" << endl;
         delete arr;
         arr = nullptr;
     }
@@ -153,6 +158,7 @@ public:
 
     ~RightAngledTriangle()
     {
+        cout << "Child Desctructor Called" << endl;
         delete arr;
         arr = nullptr;
     }
@@ -194,3 +200,7 @@ int main()
 
     return 0;
 }
+
+// If we don't make the destructor of the base class virtual, only the base class destructor
+// is called. To ensure execution of child class destructor and deleteion of arr (array
+// declared on heap) we need to make base class desctructor virtual.
