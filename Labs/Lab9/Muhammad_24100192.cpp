@@ -188,13 +188,125 @@ public:
 
 int main()
 {
-    Complex c1(4, 4);
-    Complex c2(2, 2);
+    while (1)
+    {
+        int option = 4;
 
-    Integer *i = &c2;
+        Integer *num1;
+        Integer *num2;
 
-    c1.multiply(i);
-    c1.display();
+        cout << "Select an option:" << endl;
+        cout << "   1: Integer Calculator" << endl;
+        cout << "   2: Complex Calculator" << endl;
+        cout << "   3: Rational Calculator" << endl;
+        cout << "   4: Exit Program" << endl
+             << "Option >> ";
+        cin >> option;
 
+        if (option == 1)
+        {
+            int i1;
+            int i2;
+
+            cout << "Enter value of integer 1 >> ";
+            cin >> i1;
+
+            cout << "Enter value of integer 2 >> ";
+            cin >> i2;
+
+            num1 = new Integer(i1);
+            num2 = new Integer(i2);
+        }
+        else if (option == 2)
+        {
+            int a_r;
+            int a_c;
+            int b_r;
+            int b_c;
+
+            cout << "Enter real part of Complex 1 >> ";
+            cin >> a_r;
+
+            cout << "Enter complex part of Complex 1 >> ";
+            cin >> a_c;
+
+            cout << "Enter real part of Complex 2 >> ";
+            cin >> b_r;
+
+            cout << "Enter complex part of Complex 2 >> ";
+            cin >> b_c;
+
+            num1 = new Complex(a_r, a_c);
+            num2 = new Complex(b_r, b_c);
+        }
+        else if (option == 3)
+        {
+            int p;
+            int q;
+            int x;
+            int y;
+
+            cout << "Enter numerator of Rational 1 >> ";
+            cin >> p;
+
+            cout << "Enter denominator of Rational 1 >> ";
+            cin >> q;
+
+            cout << "Enter numerator of Rational 2 >> ";
+            cin >> x;
+
+            cout << "Enter denominator of Rational 2 >> ";
+            cin >> y;
+
+            num1 = new Rational(p, q);
+            num2 = new Rational(x, y);
+        }
+        else
+        {
+            return 0;
+        }
+
+        //////////////////////////////////////////////
+
+        option = 4;
+        cout << endl
+             << "Select an operation:" << endl;
+        cout << "   1: Add" << endl;
+        cout << "   2: Subtract" << endl;
+        cout << "   3: Multiply" << endl;
+        cout << "   4: Exit Program" << endl
+             << "Option >> ";
+        cin >> option;
+
+        cout << endl;
+
+        if (option == 1)
+        {
+            num1->add(num2);
+            cout << "Sum is ";
+            num1->display();
+        }
+        else if (option == 2)
+        {
+            num1->subtract(num2);
+            cout << "Difference is ";
+            num1->display();
+        }
+        else if (option == 3)
+        {
+            num1->multiply(num2);
+            cout << "Product is ";
+            num1->display();
+        }
+        else
+        {
+            return 0;
+        }
+
+        cout << endl;
+
+        delete num1;
+        delete num2;
+    }
     return 0;
 }
