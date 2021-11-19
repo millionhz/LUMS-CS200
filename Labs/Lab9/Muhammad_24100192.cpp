@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -115,7 +116,14 @@ public:
     Rational(int in_numerator, int in_denominator)
         : Integer(in_numerator)
     {
-        denominator = in_denominator;
+        if (in_denominator)
+        {
+            denominator = in_denominator;
+        }
+        else
+        {
+            denominator = 1;
+        }
     }
 
     void add(Integer *other_integer)
