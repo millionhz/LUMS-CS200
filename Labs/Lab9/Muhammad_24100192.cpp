@@ -76,8 +76,11 @@ private:
         return gcd;
     }
 
-    void reduce(int p, int q)
+    void reduce()
     {
+        int p = getNumber();
+        int q = denominator;
+
         if (q == 0 || p == 0)
         {
             p = 0;
@@ -108,7 +111,7 @@ private:
         setNumber(p);
         denominator = q;
 
-        reduce(getNumber(), denominator);
+        reduce();
     }
 
 protected:
@@ -124,6 +127,8 @@ public:
         {
             denominator = 1;
         }
+
+        reduce();
     }
 
     void add(Integer *other_integer)
@@ -142,7 +147,7 @@ public:
     {
         Integer::multiply(other_integer);
         denominator *= static_cast<Rational *>(other_integer)->denominator;
-        reduce(getNumber(), denominator);
+        reduce();
     }
 
     void display()
@@ -271,6 +276,8 @@ int main()
         }
         else
         {
+            delete num1;
+            delete num2;
             return 0;
         }
 
@@ -308,6 +315,8 @@ int main()
         }
         else
         {
+            delete num1;
+            delete num2;
             return 0;
         }
 
