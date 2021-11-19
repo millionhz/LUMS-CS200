@@ -143,7 +143,7 @@ public:
     }
 };
 
-class Complex : protected Integer
+class Complex : public Integer
 {
 private:
     int complex;
@@ -170,6 +170,14 @@ public:
 
     void multiply(Integer *other_integer)
     {
+        int a_r = getNumber();
+        int a_c = complex;
+
+        int b_r = other_integer->getNumber();
+        int b_c = static_cast<Complex *>(other_integer)->complex;
+
+        setNumber((a_r * b_r) - (a_c * b_c));
+        complex = (a_r * b_c) + (a_c * b_r);
     }
 
     void display()
@@ -180,12 +188,12 @@ public:
 
 int main()
 {
-    Rational c1(4, 4);
-    Rational c2(2, 2);
+    Complex c1(4, 4);
+    Complex c2(2, 2);
 
     Integer *i = &c2;
 
-    c1.subtract(i);
+    c1.multiply(i);
     c1.display();
 
     return 0;
