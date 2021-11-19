@@ -44,37 +44,16 @@ public:
     {
         cout << number << endl;
     }
+
+    virtual ~Integer()
+    {
+    }
 };
 
 class Rational : public Integer
 {
 private:
     int denominator;
-
-    int calc_gcd(int a, int b)
-    {
-        int gcd = 0;
-        int max_val = 0;
-
-        if (b > a)
-        {
-            max_val = b;
-        }
-        else
-        {
-            max_val = a;
-        }
-
-        for (int i = 1; i <= max_val; i++)
-        {
-            if (a % i == 0 && b % i == 0)
-            {
-                gcd = i;
-            }
-        }
-
-        return gcd;
-    }
 
     void reduce()
     {
@@ -88,7 +67,7 @@ private:
         }
         else
         {
-            int gcd = calc_gcd(p, q);
+            int gcd = __gcd(p, q);
             p = p / gcd;
             q = q / gcd;
         }
@@ -154,6 +133,10 @@ public:
     {
         cout << getNumber() << "/" << denominator << endl;
     }
+
+    ~Rational()
+    {
+    }
 };
 
 class Complex : public Integer
@@ -196,6 +179,10 @@ public:
     void display()
     {
         cout << getNumber() << " + " << complex << "i" << endl;
+    }
+
+    ~Complex()
+    {
     }
 };
 
@@ -276,8 +263,6 @@ int main()
         }
         else
         {
-            delete num1;
-            delete num2;
             return 0;
         }
 
