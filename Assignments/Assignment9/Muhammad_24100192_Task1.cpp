@@ -171,49 +171,38 @@ string inputName()
     return input;
 }
 
-int inputCNIC()
+int _IntegerInput(string prompt)
 {
     int input;
-    cout << "Enter CNIC >> ";
+    cout << "Enter " << prompt << " >> ";
     cin >> input;
 
     return input;
+}
+
+int inputCNIC()
+{
+    return _IntegerInput("CNIC");
 }
 
 int inputStudentID()
 {
-    int input;
-    cout << "Enter Student ID >> ";
-    cin >> input;
-
-    return input;
+    return _IntegerInput("Student ID");
 }
 
 int inputCGPA()
 {
-    int input;
-    cout << "Enter CGPA >> ";
-    cin >> input;
-
-    return input;
+    return _IntegerInput("CGPA");
 }
 
 int inputEmployeeID()
 {
-    int input;
-    cout << "Enter Employee ID >> ";
-    cin >> input;
-
-    return input;
+    return _IntegerInput("Employee ID");
 }
 
 int inputSalary()
 {
-    int input;
-    cout << "Enter Salary >> ";
-    cin >> input;
-
-    return input;
+    return _IntegerInput("Salary");
 }
 
 int main()
