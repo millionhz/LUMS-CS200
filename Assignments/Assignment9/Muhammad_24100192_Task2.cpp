@@ -59,7 +59,7 @@ int main()
 
         cout << "Answer: " << ans << endl;
     }
-    catch (MyException e)
+    catch (MyException &e)
     {
         cout << e.text << endl;
     }
