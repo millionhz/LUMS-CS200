@@ -209,7 +209,6 @@ int main()
 {
     const size_t size = 1000;
     Person *arr[size];
-    int type[size]; // type of class
 
     size_t len = 0;
 
@@ -236,26 +235,23 @@ int main()
             cout << "   4. Teacher Assistant" << endl;
             cout << "Select Class >> ";
             cin >> option;
-            option--;
 
-            if (option < 4)
+            if (option < 5 && option > 0)
             {
-                type[len] = option;
-
-                if (option == 0)
+                if (option == 1)
                 {
                     arr[len] = new Person(inputName(), inputCNIC());
                 }
-                else if (option == 1)
+                else if (option == 2)
                 {
                     arr[len] = new Employee(inputName(), inputCNIC(), inputEmployeeID(), inputSalary());
                 }
-                else if (option == 2)
+                else if (option == 3)
                 {
                     arr[len] = new Student(inputName(), inputCNIC(), inputStudentID(), inputCGPA());
                 }
 
-                else if (option == 3)
+                else if (option == 4)
                 {
                     arr[len] = new TeacherAssistant(inputName(), inputCNIC(), inputEmployeeID(), inputSalary(), inputStudentID(), inputCGPA());
                 }
@@ -271,28 +267,12 @@ int main()
             for (size_t i = 0; i < len; i++)
             {
                 cout << "Object " << i + 1 << ":" << endl;
-                if (type[i] == 0)
-                {
-                    arr[i]->display();
-                }
-                else if (type[i] == 1)
-                {
-                    dynamic_cast<Employee *>(arr[i])->display();
-                }
-                else if (type[i] == 2)
-                {
-                    dynamic_cast<Student *>(arr[i])->display();
-                }
 
-                else if (type[i] == 3)
-                {
-                    dynamic_cast<TeacherAssistant *>(arr[i])->display();
-                }
-
+                arr[i]->display();
                 cout << endl;
             }
         }
-        else
+        else if (option == 3)
         {
             break;
         }
