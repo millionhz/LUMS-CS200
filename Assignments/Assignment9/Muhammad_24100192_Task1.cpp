@@ -10,14 +10,14 @@ private:
         name = in_name;
     }
 
-    void setCNIC(int in_cnic)
+    void setCNIC(string in_cnic)
     {
         cnic = in_cnic;
     }
 
 protected:
     string name;
-    int cnic;
+    string cnic;
 
 public:
     Person()
@@ -26,7 +26,7 @@ public:
         setCNIC(0);
     }
 
-    Person(string name, int cnic)
+    Person(string name, string cnic)
     {
         setName(name);
         setCNIC(cnic);
@@ -44,7 +44,7 @@ public:
 class Employee : virtual public Person
 {
 private:
-    void setID(int in_id)
+    void setID(string in_id)
     {
         e_id = in_id;
     }
@@ -55,10 +55,10 @@ private:
     }
 
 protected:
-    int e_id;
+    string e_id;
     int salary;
 
-    Employee(int id, int salary)
+    Employee(string id, int salary)
     {
         setID(id);
         setSalary(salary);
@@ -71,7 +71,7 @@ public:
         setSalary(0);
     }
 
-    Employee(string name, int cnic, int id, int salary)
+    Employee(string name, string cnic, string id, int salary)
         : Person(name, cnic)
     {
         setID(id);
@@ -92,7 +92,7 @@ public:
 class Student : virtual public Person
 {
 private:
-    void setID(int in_id)
+    void setID(string in_id)
     {
         s_id = in_id;
     }
@@ -103,10 +103,10 @@ private:
     }
 
 protected:
-    int s_id;
+    string s_id;
     int cgpa;
 
-    Student(int id, int cgpa)
+    Student(string id, int cgpa)
     {
         setID(id);
         setCGPA(cgpa);
@@ -119,7 +119,7 @@ public:
         setCGPA(0);
     }
 
-    Student(string name, int cnic, int id, int cgpa)
+    Student(string name, string cnic, string id, int cgpa)
         : Person(name, cnic)
     {
         setID(id);
@@ -144,7 +144,7 @@ protected:
 public:
     TeacherAssistant() {}
 
-    TeacherAssistant(string name, int cnic, int e_id, int salary, int s_id, int cgpa)
+    TeacherAssistant(string name, string cnic, string e_id, int salary, string s_id, int cgpa)
         : Person(name, cnic), Employee(e_id, salary), Student(s_id, cgpa)
     {
     }
@@ -162,10 +162,10 @@ public:
     ~TeacherAssistant() {}
 };
 
-string inputName()
+string _StringInput(string prompt)
 {
     string input;
-    cout << "Enter Name >> ";
+    cout << "Enter " << prompt << " >> ";
     cin >> input;
 
     return input;
@@ -180,14 +180,19 @@ int _IntegerInput(string prompt)
     return input;
 }
 
-int inputCNIC()
+string inputName()
 {
-    return _IntegerInput("CNIC");
+    return _StringInput("Name");
 }
 
-int inputStudentID()
+string inputCNIC()
 {
-    return _IntegerInput("Student ID");
+    return _StringInput("CNIC");
+}
+
+string inputStudentID()
+{
+    return _StringInput("Student ID");
 }
 
 int inputCGPA()
@@ -195,9 +200,9 @@ int inputCGPA()
     return _IntegerInput("CGPA");
 }
 
-int inputEmployeeID()
+string inputEmployeeID()
 {
-    return _IntegerInput("Employee ID");
+    return _StringInput("Employee ID");
 }
 
 int inputSalary()
