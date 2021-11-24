@@ -9,13 +9,13 @@ class DivideByZero : public exception
 {
 private:
 public:
-    const char *what()
+    const char *what() const noexcept
     {
         return "Division by 0 is not allowed";
     }
 };
 
-double divide(int a, int b) throw(DivideByZero)
+double divide(int a, int b) throw(exception)
 {
     if (b == 0)
     {
@@ -42,7 +42,7 @@ int main()
 
         cout << "Answer >> " << ans << endl;
     }
-    catch (DivideByZero &e)
+    catch (const exception &e)
     {
         cout << e.what() << endl;
     }
