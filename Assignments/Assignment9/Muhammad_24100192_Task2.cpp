@@ -1,4 +1,5 @@
 #include <iostream>
+#pragma GCC diagnostic ignored "-Wdeprecated"
 
 using namespace std;
 
