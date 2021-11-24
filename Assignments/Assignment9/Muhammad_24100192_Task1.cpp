@@ -19,6 +19,12 @@ protected:
     string name;
     string cnic;
 
+    void _display()
+    {
+        cout << "Name: " << name << endl;
+        cout << "CNIC: " << cnic << endl;
+    }
+
 public:
     Person()
     {
@@ -34,8 +40,7 @@ public:
 
     virtual void display()
     {
-        cout << "Name: " << name << endl;
-        cout << "CNIC: " << cnic << endl;
+        _display();
     }
 
     virtual ~Person() {}
@@ -64,6 +69,12 @@ protected:
         setSalary(salary);
     }
 
+    void _display()
+    {
+        cout << "Employee ID: " << e_id << endl;
+        cout << "Salary: " << salary << endl;
+    }
+
 public:
     Employee()
     {
@@ -80,10 +91,8 @@ public:
 
     virtual void display()
     {
-        cout << "Name: " << name << endl;
-        cout << "CNIC: " << cnic << endl;
-        cout << "Employee ID: " << e_id << endl;
-        cout << "Salary: " << salary << endl;
+        Person::_display();
+        _display();
     }
 
     virtual ~Employee() {}
@@ -112,6 +121,12 @@ protected:
         setCGPA(cgpa);
     }
 
+    void _display()
+    {
+        cout << "Student ID: " << s_id << endl;
+        cout << "CGPA: " << cgpa << endl;
+    }
+
 public:
     Student()
     {
@@ -128,10 +143,8 @@ public:
 
     virtual void display()
     {
-        cout << "Name: " << name << endl;
-        cout << "CNIC: " << cnic << endl;
-        cout << "Student ID: " << s_id << endl;
-        cout << "CGPA: " << cgpa << endl;
+        Person::_display();
+        display();
     }
 
     virtual ~Student() {}
@@ -151,12 +164,9 @@ public:
 
     void display()
     {
-        cout << "Name: " << name << endl;
-        cout << "CNIC: " << cnic << endl;
-        cout << "Employee ID: " << e_id << endl;
-        cout << "Salary: " << salary << endl;
-        cout << "Student ID: " << s_id << endl;
-        cout << "CGPA: " << cgpa << endl;
+        Person::_display();
+        Employee::_display();
+        Student::_display();
     }
 
     ~TeacherAssistant() {}
