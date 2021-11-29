@@ -18,8 +18,9 @@ public:
     Teacher();
     Teacher(string);
     string getName();
-    void addStudnet(Student *);
+    void addStudent(Student *);
     void print();
+    ~Teacher();
 };
 
 class Student
@@ -36,6 +37,7 @@ public:
     string getName();
     void addTeacher(Teacher *);
     void print();
+    ~Student();
 };
 
 /***************/
@@ -53,7 +55,7 @@ string Teacher::getName()
     return name;
 }
 
-void Teacher::addStudnet(Student *new_student)
+void Teacher::addStudent(Student *new_student)
 {
     students[num_of_students] = new_student;
     num_of_students++;
@@ -66,6 +68,8 @@ void Teacher::print()
         cout << "Teacher " << name << " teaches student " << students[i]->getName() << endl;
     }
 }
+
+Teacher::~Teacher() {}
 
 /***************/
 
@@ -87,7 +91,7 @@ void Student::addTeacher(Teacher *new_teacher)
     teachers[num_of_teachers] = new_teacher;
     num_of_teachers++;
 
-    new_teacher->addStudnet(this);
+    new_teacher->addStudent(this);
 }
 
 void Student::print()
@@ -97,6 +101,8 @@ void Student::print()
         cout << "Student " << name << " is taught by teacher " << teachers[i]->getName() << endl;
     }
 }
+
+Student::~Student() {}
 
 /***************/
 
