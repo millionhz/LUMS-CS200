@@ -78,9 +78,13 @@ public:
     {
         setDefaults();
 
+        Node *current_node = other_list.head;
+
         for (int i = 0; i < other_list.length; i++)
         {
-            insertAt(other_list.getNode(i)->getData(), i);
+            insertAt(current_node->getData(), i);
+
+            current_node = current_node->getNextPointer();
         }
     }
 
