@@ -133,6 +133,7 @@ public:
         if (prev_node)
         {
             Node *next_node = prev_node->getNextPointer()->getNextPointer();
+            // more readable this way
 
             node_to_delete = prev_node->getNextPointer();
 
@@ -158,7 +159,7 @@ public:
         return insertAt(data, 0);
     }
 
-    bool insertEnd(int data)
+    bool insertTail(int data)
     {
         return insertAt(data, length);
     }
@@ -168,7 +169,7 @@ public:
         return removeAt(0);
     }
 
-    bool removeEnd()
+    bool removeTail()
     {
         return removeAt(length - 1);
     }
@@ -201,11 +202,11 @@ int main()
     list.insertAt(231, 0);
     list.insertAt(31, 1);
     list.insertAt(313, 1);
-    list.insertEnd(0);
+    list.insertTail(0);
 
     list.displayList();
 
-    list.removeEnd();
+    list.removeTail();
     list.removeHead();
     list.displayList();
 
