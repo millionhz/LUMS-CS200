@@ -47,6 +47,12 @@ private:
     Node *head;
     int length;
 
+    void setDefaults()
+    {
+        head = NULL;
+        length = 0;
+    }
+
     Node *getNode(int index) const
     {
         if (index >= length || index < 0)
@@ -65,8 +71,17 @@ private:
 public:
     LinkedList()
     {
-        head = NULL;
-        length = 0;
+        setDefaults();
+    }
+
+    LinkedList(const LinkedList &other_list)
+    {
+        setDefaults();
+
+        for (int i = 0; i < other_list.length; i++)
+        {
+            insertAt(other_list.getNode(i)->getData(), i);
+        }
     }
 
     bool insertAt(int data, int index)
@@ -189,5 +204,9 @@ int main()
     list.removeEnd();
     list.removeHead();
     list.displayList();
+
+    LinkedList list2 = list;
+    list2.displayList();
+
     return 0;
 }
