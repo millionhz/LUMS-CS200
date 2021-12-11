@@ -2,11 +2,12 @@
 
 using namespace std;
 
+template <typename T>
 class Node
 {
 private:
-    int data;
-    Node *next_node;
+    T data;
+    Node<T> *next_node;
 
 public:
     Node()
@@ -14,37 +15,38 @@ public:
         data = 0;
     }
 
-    Node(int a)
+    Node(T a)
     {
         data = a;
         next_node = NULL;
     }
 
-    Node *getNextPointer() const
+    Node<T> *getNextPointer() const
     {
         return next_node;
     }
 
-    void setNextPointer(Node *ptr)
+    void setNextPointer(Node<T> *ptr)
     {
         next_node = ptr;
     }
 
-    void setData(int a)
+    void setData(T a)
     {
         data = a;
     }
 
-    int getData() const
+    T getData() const
     {
         return data;
     }
 };
 
+template <typename T>
 class LinkedList
 {
 private:
-    Node *head;
+    Node<T> *head;
     int length;
 
     void setDefaults()
@@ -53,14 +55,14 @@ private:
         length = 0;
     }
 
-    Node *getNode(int index) const
+    Node<T> *getNode(int index) const
     {
         if (index >= length || index < 0)
         {
             return NULL;
         }
 
-        Node *ptr = head;
+        Node<T> *ptr = head;
         for (int i = 0; i < index; i++)
         {
             ptr = ptr->getNextPointer();
@@ -78,7 +80,7 @@ public:
     {
         setDefaults();
 
-        Node *current_node = other_list.head;
+        Node<T> *current_node = other_list.head;
 
         for (int i = 0; i < other_list.length; i++)
         {
@@ -88,21 +90,21 @@ public:
         }
     }
 
-    bool insertAt(int data, int index)
+    bool insertAt(T data, int index)
     {
         if (index > length || index < 0)
         {
             return false;
         }
 
-        Node *new_node = new Node;
+        Node<T> *new_node = new Node<T>;
         new_node->setData(data);
 
-        Node *prev_node = getNode(index - 1);
+        Node<T> *prev_node = getNode(index - 1);
 
         if (prev_node)
         {
-            Node *current_node = prev_node->getNextPointer();
+            Node<T> *current_node = prev_node->getNextPointer();
 
             prev_node->setNextPointer(new_node);
 
@@ -126,13 +128,13 @@ public:
             return false;
         }
 
-        Node *prev_node = getNode(index - 1);
+        Node<T> *prev_node = getNode(index - 1);
 
-        Node *node_to_delete; // mode_to_delete acts as a temp variable
+        Node<T> *node_to_delete; // mode_to_delete acts as a temp variable
 
         if (prev_node)
         {
-            Node *next_node = prev_node->getNextPointer()->getNextPointer();
+            Node<T> *next_node = prev_node->getNextPointer()->getNextPointer();
             // more readable this way
 
             node_to_delete = prev_node->getNextPointer();
@@ -153,13 +155,12 @@ public:
         return true;
     }
 
-    bool
-    insertHead(int data)
+    bool insertHead(T data)
     {
         return insertAt(data, 0);
     }
 
-    bool insertTail(int data)
+    bool insertTail(T data)
     {
         return insertAt(data, length);
     }
@@ -185,19 +186,20 @@ public:
 
     ~LinkedList()
     {
-        Node *current_node = head;
-        while (current_node)
+        Node<T> *next_pointer;
+
+        while (head)
         {
-            Node *temp = current_node->getNextPointer();
-            delete current_node;
-            current_node = temp;
+            next_pointer = head->getNextPointer();
+            delete head;
+            head = next_pointer;
         }
     }
 };
 
 int main()
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.insertHead(45);
     list.insertAt(231, 0);
     list.insertAt(31, 1);
@@ -210,7 +212,7 @@ int main()
     list.removeHead();
     list.displayList();
 
-    LinkedList list2 = list;
+    LinkedList<int> list2 = list;
     list2.displayList();
 
     return 0;
