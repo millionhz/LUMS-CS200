@@ -10,6 +10,9 @@ private:
     Node<T> *next_node;
 
 public:
+    using NodePointer = Node<T> *;
+
+public:
     Node()
     {
         data = T();
@@ -21,12 +24,12 @@ public:
         next_node = NULL;
     }
 
-    Node<T> *getNextPointer() const
+    NodePointer getNextPointer() const
     {
         return next_node;
     }
 
-    void setNextPointer(Node<T> *ptr)
+    void setNextPointer(NodePointer ptr)
     {
         next_node = ptr;
     }
@@ -46,7 +49,11 @@ template <typename T>
 class LinkedList
 {
 private:
-    Node<T> *head;
+    using NodePointer = typename Node<T>::NodePointer;
+    using NodeObject = Node<T>;
+
+private:
+    NodePointer head;
     int length;
 
     void setDefaults()
@@ -55,14 +62,14 @@ private:
         length = 0;
     }
 
-    Node<T> *getNode(int index) const
+    NodePointer getNode(int index) const
     {
         if (index >= length || index < 0)
         {
             return NULL;
         }
 
-        Node<T> *ptr = head;
+        NodePointer ptr = head;
         for (int i = 0; i < index; i++)
         {
             ptr = ptr->getNextPointer();
@@ -80,7 +87,7 @@ public:
     {
         setDefaults();
 
-        Node<T> *current_node = other_list.head;
+        NodePointer current_node = other_list.head;
 
         for (int i = 0; i < other_list.length; i++)
         {
@@ -97,14 +104,14 @@ public:
             return false;
         }
 
-        Node<T> *new_node = new Node<T>;
+        NodePointer new_node = new NodeObject;
         new_node->setData(data);
 
-        Node<T> *prev_node = getNode(index - 1);
+        NodePointer prev_node = getNode(index - 1);
 
         if (prev_node)
         {
-            Node<T> *current_node = prev_node->getNextPointer();
+            NodePointer current_node = prev_node->getNextPointer();
 
             prev_node->setNextPointer(new_node);
 
@@ -128,13 +135,13 @@ public:
             return false;
         }
 
-        Node<T> *prev_node = getNode(index - 1);
+        NodePointer prev_node = getNode(index - 1);
 
-        Node<T> *node_to_delete; // mode_to_delete acts as a temp variable
+        NodePointer node_to_delete; // mode_to_delete acts as a temp variable
 
         if (prev_node)
         {
-            Node<T> *next_node = prev_node->getNextPointer()->getNextPointer();
+            NodePointer next_node = prev_node->getNextPointer()->getNextPointer();
             // more readable this way
 
             node_to_delete = prev_node->getNextPointer();
@@ -177,7 +184,7 @@ public:
 
     void displayList() const
     {
-        Node<T> *current_node = head;
+        NodePointer current_node = head;
 
         // for loops are safer (bounded)
         for (int i = 0; i < length; i++)
@@ -190,7 +197,7 @@ public:
 
     ~LinkedList()
     {
-        Node<T> *next_pointer;
+        NodePointer next_pointer;
 
         while (head)
         {
