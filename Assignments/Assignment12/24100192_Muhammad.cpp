@@ -12,7 +12,7 @@ private:
 public:
     Node()
     {
-        data = 0;
+        data = T();
     }
 
     Node(T a)
@@ -177,9 +177,13 @@ public:
 
     void displayList() const
     {
+        Node<T> *current_node = head;
+
+        // for loops are safer (bounded)
         for (int i = 0; i < length; i++)
         {
-            cout << getNode(i)->getData() << "->";
+            cout << current_node->getData() << "->";
+            current_node = current_node->getNextPointer();
         }
         cout << "NULL" << endl;
     }
@@ -197,23 +201,141 @@ public:
     }
 };
 
+template <typename T>
+T getData(const char *prompt)
+{
+    T data;
+    cout << "Enter " << prompt << " >> ";
+    cin >> data;
+
+    return data;
+}
+
+void _printSuccessMessage(const char *s, bool success)
+{
+    if (success)
+    {
+        cout << s << " was successfull!" << endl;
+    }
+    else
+    {
+        cout << s << " failed!" << endl;
+    }
+}
+
+void printInsertionMessage(bool success)
+{
+    _printSuccessMessage("Insertion", success);
+}
+
+void printRemovalMessage(bool success)
+{
+    _printSuccessMessage("Removal", success);
+}
+
+template <typename T>
+void program()
+{
+    LinkedList<T> my_list;
+
+    int option;
+
+    while (1)
+    {
+        cout << "   1. Insert data at head" << endl;
+        cout << "   2. Insert data at tail" << endl;
+        cout << "   3. Insert data at a particular index" << endl;
+        cout << "   4. Remove head node" << endl;
+        cout << "   5. Remove tail node" << endl;
+        cout << "   6. Remove node at a particular index" << endl;
+        cout << "   7. Display Linked List" << endl;
+        cout << "   0. Go back" << endl;
+        cout << "Select an option >> ";
+        cin >> option;
+
+        if (option == 1)
+        {
+            bool success = my_list.insertHead(getData<T>("data"));
+
+            printInsertionMessage(success);
+        }
+        else if (option == 2)
+        {
+            bool success = my_list.insertTail(getData<T>("data"));
+
+            printInsertionMessage(success);
+        }
+        else if (option == 3)
+        {
+            bool success = my_list.insertAt(getData<T>("data"), getData<int>("index"));
+
+            printInsertionMessage(success);
+        }
+        else if (option == 4)
+        {
+            bool success = my_list.removeHead();
+
+            printRemovalMessage(success);
+        }
+        else if (option == 5)
+        {
+            bool success = my_list.removeTail();
+
+            printRemovalMessage(success);
+        }
+        else if (option == 6)
+        {
+            bool success = my_list.removeAt(getData<int>("index"));
+
+            printRemovalMessage(success);
+        }
+        else if (option == 7)
+        {
+            my_list.displayList();
+        }
+        else if (option == 0)
+        {
+            return;
+        }
+    }
+}
+
 int main()
 {
-    LinkedList<int> list;
-    list.insertHead(45);
-    list.insertAt(231, 0);
-    list.insertAt(31, 1);
-    list.insertAt(313, 1);
-    list.insertTail(0);
+    int option;
 
-    list.displayList();
+    while (1)
+    {
+        cout << "   1. Character Linked List" << endl;
+        cout << "   2. Integer Linked List" << endl;
+        cout << "   3. Double Linked List" << endl;
+        cout << "   4. String Linked List" << endl;
+        cout << "   0. Exit" << endl;
+        cout << "Select a Linked List >> ";
+        cin >> option;
 
-    list.removeTail();
-    list.removeHead();
-    list.displayList();
+        if (option == 1)
+        {
+            program<char>();
+        }
+        else if (option == 2)
+        {
+            program<int>();
+        }
+        else if (option == 3)
+        {
+            program<double>();
+        }
+        else if (option == 4)
+        {
+            cout << "NOTE >> Blank Spaces are not allowed!" << endl;
+            program<string>();
+        }
+        else if (option == 0)
+        {
+            return 0;
+        }
+    }
 
-    LinkedList<int> list2 = list;
-    list2.displayList();
-
-    return 0;
+    return 1;
 }
