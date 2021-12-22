@@ -62,6 +62,21 @@ private:
         return ptr;
     }
 
+    Node *_reverse(Node **head, Node *ptr)
+    {
+        if (!ptr->getNextPointer())
+        {
+            (*head)->setNextPointer(NULL);
+            *head = ptr;
+            return ptr;
+        }
+
+        Node *new_ptr = _reverse(head, ptr->getNextPointer());
+
+        new_ptr->setNextPointer(ptr);
+        return ptr;
+    }
+
 public:
     LinkedList()
     {
@@ -156,20 +171,7 @@ public:
 
     void reverse()
     {
-        Node *list[length];
-
-        Node *ptr = head;
-        for (int i = 0; i < length && ptr; i++)
-        {
-            list[i] = ptr;
-            ptr = ptr->getNextPointer();
-        }
-
-        for (int i = length - 1; i > 0; i--)
-        {
-            list[i]->setNextPointer(list[i - 1]);
-        }
-        head = list[length - 1];
+        _reverse(&head, head);
     }
 
     void displayList() const
