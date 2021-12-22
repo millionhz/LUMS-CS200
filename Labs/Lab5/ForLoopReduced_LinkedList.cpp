@@ -154,6 +154,24 @@ public:
         return removeAt(length - 1);
     }
 
+    void reverse()
+    {
+        Node *list[length];
+
+        Node *ptr = head;
+        for (int i = 0; i < length && ptr; i++)
+        {
+            list[i] = ptr;
+            ptr = ptr->getNextPointer();
+        }
+
+        for (int i = length - 1; i > 0; i--)
+        {
+            list[i]->setNextPointer(list[i - 1]);
+        }
+        head = list[length - 1];
+    }
+
     void displayList() const
     {
         for (int i = 0; i < length; i++)
@@ -186,8 +204,9 @@ int main()
 
     list.displayList();
 
-    list.removeEnd();
-    list.removeHead();
+    list.reverse();
+
     list.displayList();
+
     return 0;
 }
