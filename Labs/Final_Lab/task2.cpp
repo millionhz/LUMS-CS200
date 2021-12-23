@@ -270,7 +270,6 @@ ostream &operator<<(ostream &os, const LinkedList &list)
 
 int main()
 {
-    cout << "Running" << endl;
     LinkedList list;
 
     LinkedList l;
@@ -297,6 +296,5 @@ int main()
     ++l;
     cout << l << endl;
 
-    cout << "ending" << endl;
     return 0;
 }
