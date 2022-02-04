@@ -134,6 +134,12 @@ public:
         else
         {
             new_node->setNextPointer(head);
+
+            if (head)
+            {
+                head->setPreviousPointer(new_node);
+            }
+
             head = new_node;
         }
 
